@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Agentenbasierte Steuerung", "Agentenbasierte Steuerung\Agentenbasierte Steuerung.pyproj", "{27B21F8A-21DE-4943-AC0C-05BAE6E6BE2A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{27B21F8A-21DE-4943-AC0C-05BAE6E6BE2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27B21F8A-21DE-4943-AC0C-05BAE6E6BE2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1293D368-5528-44EA-8221-CD06B976BA79}
+	EndGlobalSection
+EndGlobal
