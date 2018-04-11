@@ -12,8 +12,9 @@ from time import sleep
 
 class Objektpool(threading.Thread):
 
-    def __init__(self, Host,User,PWD,Port,DB):
+    def __init__(self, Host,User,PWD,Port,DB, Simulation):
         threading.Thread.__init__(self)
+        self.simulation = Simulation
         self.host = Host
         self.user = User
         self.pwd = PWD
@@ -39,7 +40,7 @@ class Objektpool(threading.Thread):
 
     def RessourcenInstanzAnlegen(self,ID,Bezeichnung,ComPort):
         Agentenvariable = "M"+str(ID)
-        Agentenvariable = Maschinenagent(ID,Bezeichnung,ComPort,self)
+        Agentenvariable = Maschinenagent(ID,Bezeichnung,ComPort,self, self.simulation)
         Agentenvariable.start()
         self.ressourcen.append(Agentenvariable)
      
@@ -91,7 +92,7 @@ class Objektpool(threading.Thread):
             if Programmende == True:
                 for n in self.ressourcen:
                     n.Statusupdate("Sleep Mode")
-                sleep(5)
+                    sleep(1)
                 break
             else:
                 sleep(0.5)

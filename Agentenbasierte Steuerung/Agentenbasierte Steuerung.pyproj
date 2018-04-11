@@ -11,6 +11,7 @@
     <OutputPath>.</OutputPath>
     <Name>Agentenbasierte Steuerung</Name>
     <RootNamespace>Agentenbasierte Steuerung</RootNamespace>
+    <IsWindowsApplication>False</IsWindowsApplication>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,11 +22,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Agentenbasierte_Steuerung.py" />
-    <Compile Include="Dialog.py" />
-    <Compile Include="GUI.py">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="cockpit.py" />
     <Compile Include="Lageragent.py">
       <SubType>Code</SubType>
     </Compile>

@@ -3,7 +3,7 @@ import operator
 from time import sleep
 import serial
 
-Simulation = True       # Wenn True wird der Physische Komunikationsteil abgeschaltet
+
 Speedup = 10            # Zum Debuggen die Prozesszeit um diesen Faktor verkürzen
 
 class Maschinenagent(threading.Thread):
@@ -12,8 +12,9 @@ class Maschinenagent(threading.Thread):
     serial_port.timeout
     serial_port.port
 
-    def __init__(self, ProcessID, Bezeichnung,ComPort,DB):
+    def __init__(self, ProcessID, Bezeichnung,ComPort,DB, Simulation):
         threading.Thread.__init__(self)
+        self.simulation = Simulation
         self.DB = DB
         self.serial_port = serial.Serial()
         self.serial_port.baudrate = 9600
@@ -27,7 +28,7 @@ class Maschinenagent(threading.Thread):
         self.prozesszeit = 0
         self.printIdent = "MA" + str(self.processID)+ ": "
         
-        if Simulation == False:
+        if self.simulation == False:
             if self.serial_port.isOpen(): 
                 self.serial_port.close()
             self.serial_port.open()
@@ -73,7 +74,7 @@ class Maschinenagent(threading.Thread):
         print(self.printIdent + Info)
 
     def printBluetooth(self, Message):
-        if Simulation == False:
+        if self.simulation == False:
             Commstring = "Statusupdate " + str(Message)
             self.serial_port.write(Commstring.encode('utf-8'))
 
