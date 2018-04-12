@@ -7,11 +7,13 @@ from PyQt5.QtChart import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
+import threading
 
-class CockpitWidget(QWidget):
+class CockpitWidget(QWidget, threading.Thread):
 
     def __init__(self, Objektpool):
         super().__init__()
+        threading.Thread.__init__(self)
         self.initMe()
         self.DB = Objektpool
 
@@ -42,14 +44,7 @@ class CockpitWidget(QWidget):
 
 
         self.setObjectName("Cockpit")
-          
-        
-        
-        
-
-
-
-
+         
         productWaiting = QBarSet("Waiting")
         productWaiting.setColor(QColor("red"))
         productProcessing = QBarSet("Processing")
@@ -146,4 +141,5 @@ class CockpitWidget(QWidget):
         _translate = QtCore.QCoreApplication.translate
         Cockpit.setWindowTitle(_translate("Cockpit", "Cockpit"))
 
-
+    def run(self):
+        pass

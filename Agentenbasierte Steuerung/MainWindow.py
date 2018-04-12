@@ -5,13 +5,13 @@ from PyQt5.QtCore import *
 from PyQt5 import QtWidgets , QtGui, QtCore, QtChart
 from Objektpool import Objektpool
 from cockpit import *
-import threading
 
 
 
-class Fenster(QMainWindow,threading.Thread):
+
+class Fenster(QMainWindow):
     def __init__(self):
-        threading.Thread.__init__(self)
+
         super().__init__()
         self.initMe()
 
@@ -81,7 +81,6 @@ class Fenster(QMainWindow,threading.Thread):
         self.statusBar().showMessage("Programmiert von Philip Diem")
         self.retranslateUi()
         QtCore.QMetaObject.connectSlotsByName(self)
-
         self.startButton.clicked.connect(self.StartSimulation)
         self.cockpitButton.clicked.connect(self.showCockpit)
 
@@ -110,8 +109,7 @@ class Fenster(QMainWindow,threading.Thread):
     def OpenDBManupulation():
         pass
 
-    def run(self):
-        pass
+        
 
 
 
