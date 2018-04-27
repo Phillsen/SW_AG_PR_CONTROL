@@ -18,18 +18,24 @@ class Produktagent(threading.Thread):
         self.lagerLocation = Location
         self.location = Location
         self.status = "idle"   # idle, wait, busy, transport
+        self.lastStatus = None
         self.printIdent = "PA" + str(self.productID)+ ": "
         self.done = False
-        self.StatusspeicherRuntime = []
-        self.StatusspeicherAuswertung = [[],[],[],[],[]]
         self.startzeit = datetime.datetime.now()
         self.endzeit = None
         self.durchlaufzeit = None
-                        
+        self.busyTime = 0
+        self.processTime = 0
+        self.transportTime = 0
+        self.waitTime = 0
+        self.idleTime = 0
+        self.lastStatusChangeTimestamp = datetime.datetime.now()
+        self.now = None
+                                
     def Statusupdate(self, Status):
+        self.lastStatus = self.status
         self.status = Status
-        self.print("Status: " +str(self.status))
-        self.StatusspeicherRuntime.append([Status,datetime.datetime.now()])
+        self.KPI_Logger()
         
     def CheckForTasks(self):
         self.Statusupdate("busy")
@@ -45,7 +51,7 @@ class Produktagent(threading.Thread):
         if Info == "Ankunft":
             self.Statusupdate("wait")
         if Info == "Prozessstart":
-            self.Statusupdate("In Bearbeitung")
+            self.Statusupdate("processing")
         if Info == "Prozessende":
 
             if  self.nextStep != len(self.processList)-1:
@@ -58,34 +64,39 @@ class Produktagent(threading.Thread):
         if Info == "Fertig":
             self.Statusupdate("done")
             self.done = True
-            self.endzeit = datetime.datetime.now()
-            self.KPI_Auswertung()
+           
     
-    def KPI_Auswertung(self):
-        self.durchlaufzeit = self.endzeit - self.startzeit
-        self.print(str(self.startzeit))
-        self.print(str(self.endzeit))
-        self.print("Durchlaufzeit: "+ str(self.durchlaufzeit))
+    def KPI_Logger(self,):
+        self.now = datetime.datetime.now()
+        TimeSpanSinceLastStatus = float((self.now-self.lastStatusChangeTimestamp).total_seconds())
 
-        for n in range(0,(len(self.StatusspeicherRuntime)-1)):
+        if self.lastStatus == "busy":
+            if self.busyTime == None:
+                self.busyTime = TimeSpanSinceLastStatus
+            else:
+                self.busyTime = self.busyTime + TimeSpanSinceLastStatus
+
+        elif self.lastStatus == "wait":
+            if self.waitTime == None:
+                self.waitTime = TimeSpanSinceLastStatus
+            else:
+                self.waitTime = self.waitTime + TimeSpanSinceLastStatus
             
-            Stempel = self.StatusspeicherRuntime[n]
-            Stempel_2 = self.StatusspeicherRuntime[n+1]
-            Beginn = Stempel[1]
-            Ende = Stempel_2[1]
-            Status = Stempel[0]
-            Dauer = Ende-Beginn
+        elif self.lastStatus == "transport":
+            if self.transportTime == None:
+                self.transportTime = TimeSpanSinceLastStatus
+            else:
+                self.transportTime = self.transportTime + TimeSpanSinceLastStatus
 
-            if Status == "idle":
-                self.StatusspeicherAuswertung[0].append(Dauer)
-            if Status == "busy":
-                self.StatusspeicherAuswertung[1].append(Dauer)
-            if Status == "transport":
-                self.StatusspeicherAuswertung[2].append(Dauer)
-            if Status == "wait":
-                self.StatusspeicherAuswertung[3].append(Dauer)
-            if Status == "In Bearbeitung":
-                self.StatusspeicherAuswertung[4].append(Dauer)
+        elif self.lastStatus == "processing":
+            if self.processTime == None:
+                self.processTime = TimeSpanSinceLastStatus
+            else:
+                self.processTime = self.processTime + TimeSpanSinceLastStatus
+        
+        self.lastStatusChangeTimestamp = datetime.datetime.now()
+
+
 
      
     def Zielwahl(self):
@@ -111,11 +122,12 @@ class Produktagent(threading.Thread):
         while True:
             if self.status == "idle":
                 self.CheckForTasks()
+
             if self.done == True:
-                test = None
                 break
             else: 
                 sleep(0.1)
 
     def print(self, Info):
+        pass
         print(self.printIdent + Info)

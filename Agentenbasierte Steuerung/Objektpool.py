@@ -30,6 +30,7 @@ class Objektpool(threading.Thread):
         self.Transporter = None
         self.Lager = None
         self.start()
+        self.Programmende = False
 
     def LagerAnlegen(self):
         self.Lager = Lageragent(0,"Lager")
@@ -80,22 +81,21 @@ class Objektpool(threading.Thread):
                 return n
 
     def run(self):
-        Prgrammende = False
         while True:
-           
+            Beendet = 0
             for n in self.produkte:
                 if n.status == "done":
-                    Programmende = True
-                else:
-                    Programmende = False
-                sleep(2)
-            if Programmende == True:
+                    Beendet+=1
+            
+            if Beendet == 6:
+                self.Programmende = True
                 for n in self.ressourcen:
                     n.Statusupdate("Sleep Mode")
                     sleep(1)
                 break
             else:
-                sleep(0.5)
+                sleep(2)
+        
                 
 
                 

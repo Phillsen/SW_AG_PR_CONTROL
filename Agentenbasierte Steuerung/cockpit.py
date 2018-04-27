@@ -8,14 +8,15 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 import threading
+import time
 
-class CockpitWidget(QWidget, threading.Thread):
+class CockpitWidget(QWidget):
 
     def __init__(self, Objektpool):
         super().__init__()
-        threading.Thread.__init__(self)
-        self.initMe()
         self.DB = Objektpool
+        self.initMe()
+        
 
     def initMe(self):
 
@@ -41,105 +42,107 @@ class CockpitWidget(QWidget, threading.Thread):
 
         self.retranslateUi(self)
         QtCore.QMetaObject.connectSlotsByName(self)
-
-
         self.setObjectName("Cockpit")
          
-        productWaiting = QBarSet("Waiting")
-        productWaiting.setColor(QColor("red"))
-        productProcessing = QBarSet("Processing")
-        productProcessing.setColor(QColor("green"))
-        productTransport = QBarSet("Transport")
-        productTransport.setColor(QColor("yellow"))
-        productBusy = QBarSet("Busy")
-        productBusy.setColor(QColor("blue"))
+        self.productWaiting = QBarSet("Waiting")
+        self.productWaiting.setColor(QColor("red"))
+        self.productProcessing = QBarSet("Processing")
+        self.productProcessing.setColor(QColor("green"))
+        self.productTransport = QBarSet("Transport")
+        self.productTransport.setColor(QColor("yellow"))
+        self.productBusy = QBarSet("Busy")
+        self.productBusy.setColor(QColor("blue"))
 
 
         # Variablen hier einfügen ------------------------------------------------------------------------------
-        productWaiting.append([2,3,2,1,2,3])
-        productProcessing.append([2,4,3,4,3,4])
-        productTransport.append([1,1,1,1,1,1])
-        productBusy.append([1,1,1,1,1,1])
-        # Variablen hier einfügen ------------------------------------------------------------------------------
-
-
-        productSeries = QStackedBarSeries()
-        productSeries.append(productWaiting)
-        productSeries.append(productProcessing)
-        productSeries.append(productTransport)
-        productSeries.append(productBusy)
-
-
-        machineIdle = QBarSet("Idle")
-        machineProcessing = QBarSet("Processing")
-        machineBusy = QBarSet("Busy")
-
-
-        # Variablen hier einfügen ------------------------------------------------------------------------------
-
-        machineIdle.append([2,3,2,1,2,3])
-        machineProcessing.append([2,3,2,1,2,3])
-        machineBusy.append([2,3,2,1,2,3])
-
-        # Variablen hier einfügen ------------------------------------------------------------------------------
-
-
-
-        machineSeries = QPercentBarSeries()
-        machineSeries.append(machineIdle)
-        machineSeries.append(machineProcessing)
-        machineSeries.append(machineBusy)
-
-
-        productChart = QChart()
-        machineChart = QChart()
-
-        productChart.addSeries(productSeries)
-        machineChart.addSeries(machineSeries)
-
-        productChart.setTitle("Zusammensetzung der DLZ")
-        machineChart.setTitle("Prozentuale Statusverteilung")
-        productChart.setAnimationOptions(QChart.SeriesAnimations)
-        machineChart.setAnimationOptions(QChart.SeriesAnimations)
-
-        productCategories = ["Produkt 1", "Produkt 2", "Produkt 3", "Produkt 4", "Produkt 5", "Produkt 6"]
-        machineCategories = ["Schweissen", "Montieren", "Kalibrieren", "Prüfen", "Verpacken"]
-
-        productAxis = QBarCategoryAxis()
-        machineAxis = QBarCategoryAxis()
-
-        productAxis.append(productCategories)
-        machineAxis.append(machineCategories)
-        machineChart.createDefaultAxes()
-        machineChart.setAxisX(machineAxis,machineSeries)
-        productChart.createDefaultAxes()
-        productChart.setAxisX(productAxis, productSeries)
-
-        productChart.legend().setVisible(True)
-        machineChart.legend().setVisible(True)
-        productChart.legend().setAlignment(Qt.AlignBottom)
-        machineChart.legend().setAlignment(Qt.AlignBottom)
-
-        productChartView = QChartView(productChart,self.machineFrame)
-        self.verticalLayout_2.addWidget(productChartView)
-        machineChartView = QChartView(machineChart,self.productFrame)
-        self.verticalLayout_3.addWidget(machineChartView)
         
-        productChartView.setRenderHint(QPainter.Antialiasing)
-        machineChartView.setRenderHint(QPainter.Antialiasing)
+        self.productWaiting.append([self.DB.produkte[0].waitTime, self.DB.produkte[1].waitTime, self.DB.produkte[2].waitTime, self.DB.produkte[3].waitTime,self.DB.produkte[4].waitTime, self.DB.produkte[5].waitTime ])
+        self.productProcessing.append([self.DB.produkte[0].processTime, self.DB.produkte[1].processTime, self.DB.produkte[2].processTime, self.DB.produkte[3].processTime, self.DB.produkte[4].processTime, self.DB.produkte[5].processTime])
+        self.productTransport.append([self.DB.produkte[0].transportTime, self.DB.produkte[1].transportTime, self.DB.produkte[2].transportTime, self.DB.produkte[3].transportTime, self.DB.produkte[4].transportTime, self.DB.produkte[5].transportTime])
+        self.productBusy.append([self.DB.produkte[0].busyTime, self.DB.produkte[1].busyTime, self.DB.produkte[2].busyTime, self.DB.produkte[3].busyTime, self.DB.produkte[4].busyTime, self.DB.produkte[5].busyTime])
+                
+        
+        # Variablen hier einfügen ------------------------------------------------------------------------------
+        
+        self.productSeries = QStackedBarSeries()
+        self.productSeries.append(self.productBusy)
+        self.productSeries.append(self.productWaiting)
+        self.productSeries.append(self.productTransport)
+        self.productSeries.append(self.productProcessing)
+        
+        
 
-        productChartView.resize(600, 300)
-        machineChartView.resize(600, 300)
-        productChartView.setWindowTitle("Produktstatus")
-        machineChartView.setWindowTitle("Maschinenstatus")
-        productChartView.setWindowIcon(QIcon("BarChart2.png"))
-        machineChartView.setWindowIcon(QIcon("BarChart2.png"))
-        productChartView.show()
-        machineChartView.show()
+
+        self.machineIdle = QBarSet("Idle")
+        self.machineProcessing = QBarSet("Processing")
+        self.machineBusy = QBarSet("Busy")
+
+
+        # Variablen hier einfügen ------------------------------------------------------------------------------
+
+        self.machineIdle.append([self.DB.ressourcen[0].waitTime, self.DB.ressourcen[1].waitTime, self.DB.ressourcen[2].waitTime, self.DB.ressourcen[3].waitTime, self.DB.ressourcen[4].waitTime])
+        self.machineProcessing.append([self.DB.ressourcen[0].processTime, self.DB.ressourcen[1].processTime, self.DB.ressourcen[2].processTime, self.DB.ressourcen[3].processTime, self.DB.ressourcen[4].processTime])
+        self.machineBusy.append([self.DB.ressourcen[0].busyTime, self.DB.ressourcen[1].busyTime, self.DB.ressourcen[2].busyTime, self.DB.ressourcen[3].busyTime, self.DB.ressourcen[4].busyTime])
+
+        # Variablen hier einfügen ------------------------------------------------------------------------------
+
+
+
+        self.machineSeries = QPercentBarSeries()
+        self.machineSeries.append(self.machineIdle)
+        self.machineSeries.append(self.machineProcessing)
+        self.machineSeries.append(self.machineBusy)
+
+
+        self.productChart = QChart()
+        self.machineChart = QChart()
+
+        self.productChart.addSeries(self.productSeries)
+        self.machineChart.addSeries(self.machineSeries)
+
+        self.productChart.setTitle("Zusammensetzung der DLZ")
+        self.machineChart.setTitle("Prozentuale Statusverteilung")
+        self.productChart.setAnimationOptions(QChart.SeriesAnimations)
+        self.machineChart.setAnimationOptions(QChart.SeriesAnimations)
+
+        self.productCategories = ["Produkt 1", "Produkt 2", "Produkt 3", "Produkt 4", "Produkt 5", "Produkt 6"]
+        self.machineCategories = ["Schweissen", "Montieren", "Kalibrieren", "Prüfen", "Verpacken"]
+
+        self.productAxis = QBarCategoryAxis()
+        self.machineAxis = QBarCategoryAxis()
+
+        self.productAxis.append(self.productCategories)
+        self.machineAxis.append(self.machineCategories)
+        self.machineChart.createDefaultAxes()
+        self.machineChart.setAxisX(self.machineAxis,self.machineSeries)
+        self.productChart.createDefaultAxes()
+        self.productChart.setAxisX(self.productAxis, self.productSeries)
+
+        self.productChart.legend().setVisible(True)
+        self.machineChart.legend().setVisible(True)
+        self.productChart.legend().setAlignment(Qt.AlignBottom)
+        self.machineChart.legend().setAlignment(Qt.AlignBottom)
+
+        self.productChartView = QChartView(self.productChart,self.machineFrame)
+        self.verticalLayout_2.addWidget(self.productChartView)
+        self.machineChartView = QChartView(self.machineChart,self.productFrame)
+        self.verticalLayout_3.addWidget(self.machineChartView)
+        
+        self.productChartView.setRenderHint(QPainter.Antialiasing)
+        self.machineChartView.setRenderHint(QPainter.Antialiasing)
+
+        self.productChartView.resize(600, 300)
+        self.machineChartView.resize(600, 300)
+        self.productChartView.setWindowTitle("Produktstatus")
+        self.machineChartView.setWindowTitle("Maschinenstatus")
+        self.productChartView.setWindowIcon(QIcon("BarChart2.png"))
+        self.machineChartView.setWindowIcon(QIcon("BarChart2.png"))
+        self.productChartView.show()
+        self.machineChartView.show()
+
+
         
     def retranslateUi(self, Cockpit):
         _translate = QtCore.QCoreApplication.translate
         Cockpit.setWindowTitle(_translate("Cockpit", "Cockpit"))
 
-    def run(self):
-        pass

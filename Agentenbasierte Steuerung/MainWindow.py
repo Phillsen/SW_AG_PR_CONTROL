@@ -9,7 +9,7 @@ from cockpit import *
 
 
 
-class Fenster(QMainWindow):
+class Fenster(QMainWindow,):
     def __init__(self):
 
         super().__init__()
@@ -82,8 +82,12 @@ class Fenster(QMainWindow):
         self.retranslateUi()
         QtCore.QMetaObject.connectSlotsByName(self)
         self.startButton.clicked.connect(self.StartSimulation)
-        self.cockpitButton.clicked.connect(self.showCockpit)
 
+        # Create a QTimer
+        self.timer = QTimer(self)
+        # Connect it to f
+        self.timer.timeout.connect(self.Auswertung)
+        # Call f() every 5 seconds
         self.show()
 
     def retranslateUi(self):
@@ -99,17 +103,18 @@ class Fenster(QMainWindow):
         Simulation = self.radioButton.isChecked()
         self.startButton.hide()
         self.DB = Objektpool("localhost","AgentenSystem","ProzessDB",3306,"prozessdaten",Simulation)  
-        self.C = CockpitWidget(self.DB)
-        self.C.show()
-        self.cockpitButton.show()
+        self.timer.start(2000)
 
-    def showCockpit(self):
-        self.C.show()
+    def Auswertung(self):
+        if self.DB.Programmende == True:                
+            self.C = CockpitWidget(self.DB)
+            self.C.show()
+            self.timer.stop()
 
-    def OpenDBManupulation():
+    def OpenDBManupulation(self):
         pass
 
-        
+
 
 
 

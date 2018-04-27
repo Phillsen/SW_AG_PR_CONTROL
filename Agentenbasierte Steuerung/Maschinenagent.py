@@ -2,9 +2,10 @@ import threading
 import operator
 from time import sleep
 import serial
+import datetime
 
 
-Speedup = 10            # Zum Debuggen die Prozesszeit um diesen Faktor verkürzen
+Speedup = 50            # Zum Debuggen die Prozesszeit um diesen Faktor verkürzen
 
 class Maschinenagent(threading.Thread):
     serial_port = serial.Serial()
@@ -27,6 +28,20 @@ class Maschinenagent(threading.Thread):
         self.queue = []
         self.prozesszeit = 0
         self.printIdent = "MA" + str(self.processID)+ ": "
+        self.startzeit = datetime.datetime.now()
+        self.endzeit = None
+        self.durchlaufzeit = None
+        self.busyTime = 0
+        self.processTime = 0
+        self.transportTime = 0
+        self.waitTime = 0
+        self.idleTime = 0
+        self.lastStatusChangeTimestamp = datetime.datetime.now()
+        self.now = None
+        self.lastStatus = None
+
+
+
         
         if self.simulation == False:
             if self.serial_port.isOpen(): 
@@ -35,14 +50,47 @@ class Maschinenagent(threading.Thread):
         self.printBluetooth("Statusupdate 2")
 
     def Statusupdate(self, Status):
+        self.lastStatus = self.status
         self.status = Status
         self.print("Status: " +str(self.status))
+        self.KPI_Logger()
         if self.status == "idle":
             self.printBluetooth(2)
         if self.status == "processing":
             self.printBluetooth(1)
         if self.status == "Sleep Mode":
             self.printBluetooth(3)
+        self.KPI_Logger()
+
+
+    def KPI_Logger(self,):
+        self.now = datetime.datetime.now()
+        TimeSpanSinceLastStatus = float((self.now-self.lastStatusChangeTimestamp).total_seconds())
+
+        if self.lastStatus == "busy":
+            if self.busyTime == None:
+                self.busyTime = TimeSpanSinceLastStatus
+            else:
+                self.busyTime = self.busyTime + TimeSpanSinceLastStatus
+
+        elif self.lastStatus == "idle":
+            if self.waitTime == None:
+                self.waitTime = TimeSpanSinceLastStatus
+            else:
+                self.waitTime = self.waitTime + TimeSpanSinceLastStatus
+ 
+        elif self.lastStatus == "processing":
+            if self.processTime == None:
+                self.processTime = TimeSpanSinceLastStatus
+            else:
+                self.processTime = self.processTime + TimeSpanSinceLastStatus
+        
+        self.lastStatusChangeTimestamp = datetime.datetime.now()
+
+
+
+
+
                     
     def Anmeldung(self,ProductID, PA):
         self.print("Product No." + str(ProductID) + " registered")
@@ -56,12 +104,12 @@ class Maschinenagent(threading.Thread):
         self.waitlist.remove(Produkt.productID)
 
     def GetPriority(self):
-        pass
+        self.Statusupdate("busy")
         self.print("sort products by priority")
         self.queue.sort(key=operator.attrgetter("dueDate"),reverse=False)
 
+
     def Processing(self,Product):
-        self.Statusupdate("Updating process parameters")
         self.prozesszeit =  int(Product.processparameter[Product.currentStep])/Speedup
         self.Statusupdate("processing")
         Product.Infoverarbeitung("Prozessstart")
