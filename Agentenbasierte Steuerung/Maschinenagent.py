@@ -39,6 +39,7 @@ class Maschinenagent(threading.Thread):
         self.lastStatusChangeTimestamp = datetime.datetime.now()
         self.now = None
         self.lastStatus = None
+        self.parkingspots = [0,0,0]
 
 
 

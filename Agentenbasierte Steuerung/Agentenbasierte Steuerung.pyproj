@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>27b21f8a-21de-4943-ac0c-05bae6e6be2a</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Cozmo Examples\apps\3d_viewer.py</StartupFile>
+    <StartupFile>Experimente.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -23,63 +23,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="cockpit.py" />
-    <Compile Include="Cozmo Examples\apps\3d_viewer.py" />
-    <Compile Include="Cozmo Examples\apps\cli.py" />
-    <Compile Include="Cozmo Examples\apps\color_finder.py" />
-    <Compile Include="Cozmo Examples\apps\cozmo_reads_tweets.py" />
-    <Compile Include="Cozmo Examples\apps\desk_security_guard.py" />
-    <Compile Include="Cozmo Examples\apps\quick_tap.py" />
-    <Compile Include="Cozmo Examples\apps\quizmaster_cozmo.py" />
-    <Compile Include="Cozmo Examples\apps\remote_control_cozmo.py" />
-    <Compile Include="Cozmo Examples\apps\tweet_at_cozmo.py" />
-    <Compile Include="Cozmo Examples\if_this_then_that\common\__init__.py" />
-    <Compile Include="Cozmo Examples\if_this_then_that\ifttt_gmail.py" />
-    <Compile Include="Cozmo Examples\if_this_then_that\ifttt_sports.py" />
-    <Compile Include="Cozmo Examples\if_this_then_that\ifttt_sports_flask.py" />
-    <Compile Include="Cozmo Examples\if_this_then_that\ifttt_stocks.py" />
-    <Compile Include="Cozmo Examples\lib\cozmo_twitter_keys.py" />
-    <Compile Include="Cozmo Examples\lib\flask_helpers.py" />
-    <Compile Include="Cozmo Examples\lib\twitter_helpers.py" />
-    <Compile Include="Cozmo Examples\lib\user_twitter_keys.py" />
-    <Compile Include="Cozmo Examples\multi_robot\multi_robot_independent.py" />
-    <Compile Include="Cozmo Examples\multi_robot\multi_robot_unified.py" />
-    <Compile Include="Cozmo Examples\tools\cubes\auto_cube_disconnect.py" />
-    <Compile Include="Cozmo Examples\tools\cubes\connect_cubes.py" />
-    <Compile Include="Cozmo Examples\tools\cubes\disconnect_cubes.py" />
-    <Compile Include="Cozmo Examples\tools\cubes\log_cube_battery_levels.py" />
-    <Compile Include="Cozmo Examples\tutorials\01_basics\01_hello_world.py" />
-    <Compile Include="Cozmo Examples\tutorials\01_basics\02_drive_and_turn.py" />
-    <Compile Include="Cozmo Examples\tutorials\01_basics\03_count.py" />
-    <Compile Include="Cozmo Examples\tutorials\01_basics\04_drive_square.py" />
-    <Compile Include="Cozmo Examples\tutorials\01_basics\05_motors.py" />
-    <Compile Include="Cozmo Examples\tutorials\01_basics\06_sing_scales.py" />
-    <Compile Include="Cozmo Examples\tutorials\01_basics\07_backpack_lights.py" />
-    <Compile Include="Cozmo Examples\tutorials\01_basics\08_animation.py" />
-    <Compile Include="Cozmo Examples\tutorials\01_basics\09_cube_lights.py" />
-    <Compile Include="Cozmo Examples\tutorials\01_basics\10_play_sound.py" />
-    <Compile Include="Cozmo Examples\tutorials\02_cozmo_face\01_cozmo_face_image.py" />
-    <Compile Include="Cozmo Examples\tutorials\02_cozmo_face\02_cozmo_face_mirror.py" />
-    <Compile Include="Cozmo Examples\tutorials\02_cozmo_face\03_alarm_clock.py" />
-    <Compile Include="Cozmo Examples\tutorials\03_vision\01_light_when_face.py" />
-    <Compile Include="Cozmo Examples\tutorials\03_vision\02_face_follower.py" />
-    <Compile Include="Cozmo Examples\tutorials\03_vision\03_annotate.py" />
-    <Compile Include="Cozmo Examples\tutorials\03_vision\04_exposure.py" />
-    <Compile Include="Cozmo Examples\tutorials\04_cubes_and_objects\01_go_to_pose_test.py" />
-    <Compile Include="Cozmo Examples\tutorials\04_cubes_and_objects\02_create_wall.py" />
-    <Compile Include="Cozmo Examples\tutorials\04_cubes_and_objects\03_go_to_object_test.py" />
-    <Compile Include="Cozmo Examples\tutorials\04_cubes_and_objects\04_stack_or_roll.py" />
-    <Compile Include="Cozmo Examples\tutorials\04_cubes_and_objects\05_cube_stack.py" />
-    <Compile Include="Cozmo Examples\tutorials\04_cubes_and_objects\06_pickup_furthest.py" />
-    <Compile Include="Cozmo Examples\tutorials\04_cubes_and_objects\07_lookaround.py" />
-    <Compile Include="Cozmo Examples\tutorials\04_cubes_and_objects\08_drive_to_charger_test.py" />
-    <Compile Include="Cozmo Examples\tutorials\04_cubes_and_objects\09_custom_objects.py" />
-    <Compile Include="Cozmo Examples\tutorials\04_cubes_and_objects\10_object_moved.py" />
-    <Compile Include="Cozmo Examples\tutorials\04_cubes_and_objects\11_dock_with_cube.py" />
-    <Compile Include="Cozmo Examples\tutorials\04_cubes_and_objects\12_roll_cube.py" />
-    <Compile Include="Cozmo Examples\tutorials\04_cubes_and_objects\13_pop_a_wheelie.py" />
-    <Compile Include="Cozmo Examples\tutorials\05_async_python\01_cube_blinker_sync.py" />
-    <Compile Include="Cozmo Examples\tutorials\05_async_python\02_cube_blinker.py" />
-    <Compile Include="Cozmo Examples\tutorials\06_actions\01_parallel_actions.py" />
     <Compile Include="Experimente.py">
       <SubType>Code</SubType>
     </Compile>
@@ -88,6 +31,68 @@
     </Compile>
     <Compile Include="MainWindow.py" />
     <Compile Include="Maschinenagent.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\apps\3d_viewer.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\apps\cli.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\apps\color_finder.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\apps\cozmo_reads_tweets.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\apps\desk_security_guard.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\apps\quick_tap.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\apps\quizmaster_cozmo.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\apps\remote_control_cozmo.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\apps\tweet_at_cozmo.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\if_this_then_that\common\__init__.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\if_this_then_that\ifttt_gmail.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\if_this_then_that\ifttt_sports.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\if_this_then_that\ifttt_sports_flask.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\if_this_then_that\ifttt_stocks.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\lib\cozmo_twitter_keys.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\lib\flask_helpers.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\lib\twitter_helpers.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\lib\user_twitter_keys.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\multi_robot\multi_robot_independent.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\multi_robot\multi_robot_unified.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tools\cubes\auto_cube_disconnect.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tools\cubes\connect_cubes.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tools\cubes\disconnect_cubes.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tools\cubes\log_cube_battery_levels.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\01_basics\01_hello_world.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\01_basics\02_drive_and_turn.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\01_basics\03_count.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\01_basics\04_drive_square.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\01_basics\05_motors.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\01_basics\06_sing_scales.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\01_basics\07_backpack_lights.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\01_basics\08_animation.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\01_basics\09_cube_lights.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\01_basics\10_play_sound.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\01_basics\11_play_song.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\01_basics\12_random_animation.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\02_cozmo_face\01_cozmo_face_image.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\02_cozmo_face\02_cozmo_face_mirror.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\02_cozmo_face\03_alarm_clock.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\03_vision\01_light_when_face.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\03_vision\02_face_follower.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\03_vision\03_annotate.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\03_vision\04_exposure.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\04_cubes_and_objects\01_go_to_pose_test.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\04_cubes_and_objects\02_create_wall.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\04_cubes_and_objects\03_go_to_object_test.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\04_cubes_and_objects\04_stack_or_roll.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\04_cubes_and_objects\05_cube_stack.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\04_cubes_and_objects\06_pickup_furthest.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\04_cubes_and_objects\07_lookaround.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\04_cubes_and_objects\08_drive_to_charger_test.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\04_cubes_and_objects\09_custom_objects.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\04_cubes_and_objects\10_object_moved.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\04_cubes_and_objects\11_dock_with_cube.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\04_cubes_and_objects\12_roll_cube.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\04_cubes_and_objects\13_pop_a_wheelie.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\05_async_python\01_cube_blinker_sync.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\05_async_python\02_cube_blinker.py" />
+    <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\06_actions\01_parallel_actions.py" />
+    <Compile Include="PhysicalTransporter.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Objektpool.py">
@@ -101,33 +106,60 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Cozmo Examples\" />
-    <Folder Include="Cozmo Examples\apps\" />
-    <Folder Include="Cozmo Examples\face_images\" />
-    <Folder Include="Cozmo Examples\if_this_then_that\" />
-    <Folder Include="Cozmo Examples\if_this_then_that\common\" />
-    <Folder Include="Cozmo Examples\lib\" />
-    <Folder Include="Cozmo Examples\multi_robot\" />
-    <Folder Include="Cozmo Examples\tools\" />
-    <Folder Include="Cozmo Examples\tools\cubes\" />
-    <Folder Include="Cozmo Examples\tutorials\" />
-    <Folder Include="Cozmo Examples\tutorials\01_basics\" />
-    <Folder Include="Cozmo Examples\tutorials\02_cozmo_face\" />
-    <Folder Include="Cozmo Examples\tutorials\03_vision\" />
-    <Folder Include="Cozmo Examples\tutorials\04_cubes_and_objects\" />
-    <Folder Include="Cozmo Examples\tutorials\05_async_python\" />
-    <Folder Include="Cozmo Examples\tutorials\06_actions\" />
+    <Folder Include="C:\Users\Phili\Documents\Studium\Master\Thesis\03 Umsetzung\Python Software\Agentenbasierte Steuerung\Agentenbasierte Steuerung\Cozmo\" />
+    <Folder Include="C:\Users\Phili\Documents\Studium\Master\Thesis\03 Umsetzung\Python Software\Agentenbasierte Steuerung\Agentenbasierte Steuerung\Cozmo\cozmo_sdk_examples_1.4.1\" />
+    <Folder Include="C:\Users\Phili\Documents\Studium\Master\Thesis\03 Umsetzung\Python Software\Agentenbasierte Steuerung\Agentenbasierte Steuerung\Cozmo\cozmo_sdk_examples_1.4.1\apps\" />
+    <Folder Include="C:\Users\Phili\Documents\Studium\Master\Thesis\03 Umsetzung\Python Software\Agentenbasierte Steuerung\Agentenbasierte Steuerung\Cozmo\cozmo_sdk_examples_1.4.1\face_images\" />
+    <Folder Include="C:\Users\Phili\Documents\Studium\Master\Thesis\03 Umsetzung\Python Software\Agentenbasierte Steuerung\Agentenbasierte Steuerung\Cozmo\cozmo_sdk_examples_1.4.1\if_this_then_that\" />
+    <Folder Include="C:\Users\Phili\Documents\Studium\Master\Thesis\03 Umsetzung\Python Software\Agentenbasierte Steuerung\Agentenbasierte Steuerung\Cozmo\cozmo_sdk_examples_1.4.1\if_this_then_that\common\" />
+    <Folder Include="C:\Users\Phili\Documents\Studium\Master\Thesis\03 Umsetzung\Python Software\Agentenbasierte Steuerung\Agentenbasierte Steuerung\Cozmo\cozmo_sdk_examples_1.4.1\lib\" />
+    <Folder Include="C:\Users\Phili\Documents\Studium\Master\Thesis\03 Umsetzung\Python Software\Agentenbasierte Steuerung\Agentenbasierte Steuerung\Cozmo\cozmo_sdk_examples_1.4.1\multi_robot\" />
+    <Folder Include="C:\Users\Phili\Documents\Studium\Master\Thesis\03 Umsetzung\Python Software\Agentenbasierte Steuerung\Agentenbasierte Steuerung\Cozmo\cozmo_sdk_examples_1.4.1\tools\" />
+    <Folder Include="C:\Users\Phili\Documents\Studium\Master\Thesis\03 Umsetzung\Python Software\Agentenbasierte Steuerung\Agentenbasierte Steuerung\Cozmo\cozmo_sdk_examples_1.4.1\tools\cubes\" />
+    <Folder Include="C:\Users\Phili\Documents\Studium\Master\Thesis\03 Umsetzung\Python Software\Agentenbasierte Steuerung\Agentenbasierte Steuerung\Cozmo\cozmo_sdk_examples_1.4.1\tutorials\" />
+    <Folder Include="C:\Users\Phili\Documents\Studium\Master\Thesis\03 Umsetzung\Python Software\Agentenbasierte Steuerung\Agentenbasierte Steuerung\Cozmo\cozmo_sdk_examples_1.4.1\tutorials\01_basics\" />
+    <Folder Include="C:\Users\Phili\Documents\Studium\Master\Thesis\03 Umsetzung\Python Software\Agentenbasierte Steuerung\Agentenbasierte Steuerung\Cozmo\cozmo_sdk_examples_1.4.1\tutorials\02_cozmo_face\" />
+    <Folder Include="C:\Users\Phili\Documents\Studium\Master\Thesis\03 Umsetzung\Python Software\Agentenbasierte Steuerung\Agentenbasierte Steuerung\Cozmo\cozmo_sdk_examples_1.4.1\tutorials\03_vision\" />
+    <Folder Include="C:\Users\Phili\Documents\Studium\Master\Thesis\03 Umsetzung\Python Software\Agentenbasierte Steuerung\Agentenbasierte Steuerung\Cozmo\cozmo_sdk_examples_1.4.1\tutorials\04_cubes_and_objects\" />
+    <Folder Include="C:\Users\Phili\Documents\Studium\Master\Thesis\03 Umsetzung\Python Software\Agentenbasierte Steuerung\Agentenbasierte Steuerung\Cozmo\cozmo_sdk_examples_1.4.1\tutorials\05_async_python\" />
+    <Folder Include="C:\Users\Phili\Documents\Studium\Master\Thesis\03 Umsetzung\Python Software\Agentenbasierte Steuerung\Agentenbasierte Steuerung\Cozmo\cozmo_sdk_examples_1.4.1\tutorials\06_actions\" />
+    <Folder Include="Cozmo\" />
+    <Folder Include="Cozmo\cozmo_sdk_examples_1.4.1\" />
+    <Folder Include="Cozmo\cozmo_sdk_examples_1.4.1\apps\" />
+    <Folder Include="Cozmo\cozmo_sdk_examples_1.4.1\face_images\" />
+    <Folder Include="Cozmo\cozmo_sdk_examples_1.4.1\if_this_then_that\" />
+    <Folder Include="Cozmo\cozmo_sdk_examples_1.4.1\if_this_then_that\common\" />
+    <Folder Include="Cozmo\cozmo_sdk_examples_1.4.1\lib\" />
+    <Folder Include="Cozmo\cozmo_sdk_examples_1.4.1\multi_robot\" />
+    <Folder Include="Cozmo\cozmo_sdk_examples_1.4.1\tools\" />
+    <Folder Include="Cozmo\cozmo_sdk_examples_1.4.1\tools\cubes\" />
+    <Folder Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\" />
+    <Folder Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\01_basics\" />
+    <Folder Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\02_cozmo_face\" />
+    <Folder Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\03_vision\" />
+    <Folder Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\04_cubes_and_objects\" />
+    <Folder Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\05_async_python\" />
+    <Folder Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\06_actions\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Cozmo Examples\apps\freeglut.dll">
-      <Publish>True</Publish>
-    </Content>
-    <Content Include="Cozmo Examples\apps\quiz_questions.json" />
-    <Content Include="Cozmo Examples\face_images\cozmosdk.png" />
-    <Content Include="Cozmo Examples\face_images\hello_world.png" />
-    <Content Include="Cozmo Examples\face_images\ifttt_gmail.png" />
-    <Content Include="Cozmo Examples\face_images\ifttt_sports.png" />
-    <Content Include="Cozmo Examples\face_images\ifttt_stocks.png" />
+    <Content Include="Cozmo\cozmo_sdk_examples_1.4.1\apps\freeglut.dll" />
+    <Content Include="Cozmo\cozmo_sdk_examples_1.4.1\apps\quiz_questions.json" />
+    <Content Include="Cozmo\cozmo_sdk_examples_1.4.1\face_images\cozmosdk.png" />
+    <Content Include="Cozmo\cozmo_sdk_examples_1.4.1\face_images\hello_world.png" />
+    <Content Include="Cozmo\cozmo_sdk_examples_1.4.1\face_images\ifttt_gmail.png" />
+    <Content Include="Cozmo\cozmo_sdk_examples_1.4.1\face_images\ifttt_sports.png" />
+    <Content Include="Cozmo\cozmo_sdk_examples_1.4.1\face_images\ifttt_stocks.png" />
+    <Content Include="Cozmo\cozmo_sdk_examples_1.4.1\lib\freeglut.dll" />
+    <Content Include="Cozmo\cozmo_sdk_examples_1.4.1\LICENSE.txt" />
+    <Content Include="Cozmo\cozmo_sdk_examples_1.4.1\multi_robot\freeglut.dll" />
+    <Content Include="Cozmo\cozmo_sdk_examples_1.4.1\README.md" />
+    <Content Include="Cozmo\cozmo_sdk_examples_1.4.1\tools\cubes\freeglut.dll" />
+    <Content Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\01_basics\freeglut.dll" />
+    <Content Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\02_cozmo_face\freeglut.dll" />
+    <Content Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\03_vision\freeglut.dll" />
+    <Content Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\04_cubes_and_objects\freeglut.dll" />
+    <Content Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\05_async_python\freeglut.dll" />
+    <Content Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\06_actions\freeglut.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

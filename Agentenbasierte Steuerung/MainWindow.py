@@ -115,9 +115,6 @@ class Fenster(QMainWindow,):
         pass
 
 
-
-
-
 app = QApplication(sys.argv)
 w = Fenster()
 
