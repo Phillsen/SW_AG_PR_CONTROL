@@ -6,9 +6,6 @@ import asyncio
 
 
 def Batterycheck(robot: cozmo.robot.Robot):
-
-    cube = None
-    lastcube = None
     
     print("")
     print("Akkustand Cozmo: " + str(round(robot.battery_voltage,2)) + "Volt")
@@ -28,9 +25,13 @@ def Batterycheck(robot: cozmo.robot.Robot):
             c.set_lights(cozmo.lights.green_light)
         else:
             c.set_lights(cozmo.lights.red_light)
+
     end = False
     while end == False:
-        if input("Beenden mit x: ") == "x":
-            end = True
+        Eingabe = str(input("Beenden mit x: "))
+        Eingabe = Eingabe.upper()
+        if Eingabe == "X":
+            break
+
           
 cozmo.run_program(Batterycheck)
