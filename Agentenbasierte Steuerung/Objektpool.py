@@ -32,15 +32,15 @@ class Objektpool(threading.Thread):
         self.Programmende = False
 
     def LagerAnlegen(self):
-        self.Lager = Lageragent(0,"Lager")
+        self.Lager = Lageragent(0,(0,0),"Lager")
         self.Lagerlocation = self.Lager
         
     def TransportAgentAnlegen(self):
-        self.Transporter = Transportagent(1,self.Lagerlocation)
+        self.Transporter = Transportagent(1,self.Lagerlocation,self)
 
     def RessourcenInstanzAnlegen(self,ID,Bezeichnung,ComPort):
         Agentenvariable = "M"+str(ID)
-        Agentenvariable = Maschinenagent(ID,Bezeichnung,ComPort,self, self.simulation)
+        Agentenvariable = Maschinenagent(ID,Bezeichnung,ComPort,self, self.simulation, (0,0))
         Agentenvariable.start()
         self.ressourcen.append(Agentenvariable)
      
@@ -89,7 +89,7 @@ class Objektpool(threading.Thread):
             if Beendet == 6:
                 self.Programmende = True
                 for n in self.ressourcen:
-                    n.Statusupdate("Sleep Mode")
+                    n.StatusUpdate("Sleep Mode")
                     sleep(1)
                 break
             else:

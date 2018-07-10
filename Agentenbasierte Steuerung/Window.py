@@ -9,17 +9,16 @@ from cockpit import *
 
 
 
-class Fenster(QMainWindow,):
+class Fenster(QMainWindow):
     def __init__(self):
 
         super().__init__()
         self.initMe()
+               
 
     def initMe(self):
-        self.counter = 0
         self.setObjectName("MainWindow")
         self.setWindowIcon(QIcon("lightbulb2.png"))
-   
         self.resize(800,600)
         self.centralwidget = QtWidgets.QWidget(self)
         self.centralwidget.setObjectName("centralwidget")
@@ -104,13 +103,14 @@ class Fenster(QMainWindow,):
         Simulation = self.radioButton.isChecked()
         self.startButton.hide()
         self.DB = Objektpool("localhost","AgentenSystem","ProzessDB",3306,"prozessdaten",Simulation)  
-        self.timer.start(500)
+        self.timer.start(2000)
+        
 
     def Auswertung(self):
-        if self.DB.Programmende == True:
-         self.C = CockpitWidget(self.DB)
-         self.C.show()  
-         self.timer.stop()
+        if self.DB.Programmende == True:                
+            self.C = CockpitWidget(self.DB)
+            self.C.show()
+            self.timer.stop()
 
     def OpenDBManupulation(self):
         pass
@@ -118,7 +118,6 @@ class Fenster(QMainWindow,):
 
 app = QApplication(sys.argv)
 w = Fenster()
-
 sys.exit(app.exec_())
 
 

@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>27b21f8a-21de-4943-ac0c-05bae6e6be2a</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Experimente.py</StartupFile>
+    <StartupFile>MainWindow.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,6 +22,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Agentenklasse.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="cockpit.py" />
     <Compile Include="Experimente.py">
       <SubType>Code</SubType>
@@ -92,9 +95,6 @@
     <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\05_async_python\01_cube_blinker_sync.py" />
     <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\05_async_python\02_cube_blinker.py" />
     <Compile Include="Cozmo\cozmo_sdk_examples_1.4.1\tutorials\06_actions\01_parallel_actions.py" />
-    <Compile Include="PhysicalTransporter.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Objektpool.py">
       <SubType>Code</SubType>
     </Compile>
@@ -102,6 +102,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Produktagent.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Transporter.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

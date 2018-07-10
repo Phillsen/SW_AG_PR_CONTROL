@@ -1,9 +1,12 @@
-class Lageragent():
+import Agentenklasse
 
-    def __init__(self, Location, Bezeichnung):
-        self.location = Location
-        self.bezeichnung = Bezeichnung
-        self.parkingspots = [0,0,0,0,0,0]
+
+class Lageragent(Agentenklasse.Agent):
+
+    def __init__(self, ID, Location, Bezeichnung,):
+        super().__init__(ID, Location, Bezeichnung)
+                     
 
     def Ankunft(self,Product):
         Product.Infoverarbeitung("Fertig")
+

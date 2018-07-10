@@ -1,72 +1,54 @@
 from time import sleep
 import operator
-import threading
-#import PhysicalTransporter
 import cozmo
-from cozmo.util import degrees, Pose, distance_mm, speed_mmps
-import asyncio
-from Experimente import CozmoBot
+import Agentenklasse
+import Transporter
+
+
 
 # Transportdauer(s)für die Simulation. Kann beliebeig eingestellt werden. 
 Transportdauer = 1
 
 
-class Transportagent(threading.Thread):
+class Transportagent(Agentenklasse.Agent):
     
-    def __init__(self, TransporterID, Location): 
-        threading.Thread.__init__(self)
-        self.transporterID = TransporterID
-        self.location = Location
-        self.status = "idle"   # idle, busy
+    def __init__(self, ID, Location, Objektpool):
+        super().__init__(ID, Location, Bezeichnung="Transporter")
+        self.status = "wait"   # wait, busy
         self.transportlist = []
-        self.printIdent = "TA" + str(self.transporterID)+ ": "
-        self.my_bot = CozmoBot(cozmo.robot.Robot)
-        #def cozmo_program(robot: cozmo.robot.Robot):
-        #    self.my_bot = CozmoBot(robot)
-        #cozmo.run_program(cozmo_program)
         self.start()
-
-       
+        self.objektpool = Objektpool
         
 
-    def Transportrequest(self,TransportItem):   #Auftrag: [Produkt, Start, Ziel]
-        self.print("Product No." + str(TransportItem.productID) + " registered for transport from " + str(TransportItem.location.bezeichnung) + " to " + str(TransportItem.destination.bezeichnung))
+    def Transportrequest(self,TransportItem):   
+        self.print("Product No." + str(TransportItem.ID) + " registered for transport from " + str(TransportItem.location.bezeichnung) + " to " + str(TransportItem.destination.bezeichnung))
         # Das anfragende Produkt in die Transportliste eintragen
-        self.Parkingspotselector(TransportItem)
         self.transportlist.append(TransportItem)
-
-    def Parkingspotselector(self,TransportItem):
-        puffer = TransportItem.destination.parkingspots
-        selectedspot = None
-
-        for i in puffer:
-            if i == 0:
-                selectedspot = i+1
-                break
-        if selectedspot == None:
-            print("Puffer Voll")
-        print(selectedspot)
-        code = 0                  
-
-    def Statusupdate(self, Status):
-        self.status = Status
-        #self.print("Status: " + str(self.status))
 
     def GetPriority(self):
         #Die Warteliste entsprechend der Prioriaet ordnen. NOCH NICHT FERTIG -----------------------------------------------------------------------
         self.print("sort transfer orders by priority")
-        self.transportlist.sort(key=operator.attrgetter("dueDate"),reverse=False)
+        self.transportlist.sort(key=operator.attrgetter("dueDate"),reverse=False) 
         
     def Transport(self):
         # Statuswechsel
-        self.Statusupdate("busy")
-        self.print("transporting product:" + str(self.transportlist[0].productID) + " from " + str(self.transportlist[0].location.bezeichnung) +" to " +str(self.transportlist[0].destination.bezeichnung))
+        self.StatusUpdate("busy")
+        self.print("transporting product:" + str(self.transportlist[0].ID) + " from " + str(self.transportlist[0].location.bezeichnung) +" to " +str(self.transportlist[0].destination.bezeichnung))
         # Produkt über Abtransport informieren
-        self.my_bot.distance=100
-
         self.transportlist[0].Infoverarbeitung("Abtransport")
 
-        # Produktstandort aktualisieren 
+
+        # Simulation == Es wird einfach mit der "Dummy"-Transportdauer gerechnet
+        if self.objektpool.simulation == True:
+            sleep(Transportdauer)
+        
+        # Demo == Cozmo verursacht die Transportzeit
+        elif self.objektpool.simulation == False:
+            pass
+            #Cozmokram
+        
+        
+        #Produktstandort aktualisieren 
         self.transportlist[0].location = self.transportlist[0].destination
         # Produkt über Ankunft informieren
         self.transportlist[0].Infoverarbeitung("Ankunft")
@@ -75,11 +57,9 @@ class Transportagent(threading.Thread):
         # Auftrag aus der Liste Löschen
         del self.transportlist[0]
         # Statuswechsel
-        self.Statusupdate("idle")
+        self.StatusUpdate("wait")
               
 
-    def print(self, Info):
-        print(self.printIdent + Info)
 
  
     def run(self):
@@ -90,5 +70,6 @@ class Transportagent(threading.Thread):
                 self.GetPriority()
                 # Den Transportauftrag abarbeiten
                 self.Transport()
+                sleep(0.5)
             else:
-                sleep(0.1)
+                sleep(0.5)
