@@ -28,9 +28,6 @@ from cozmo.util import degrees, distance_mm, speed_mmps
 def cozmo_program(robot: cozmo.robot.Robot):
     # Use a "for loop" to repeat the indented code 4 times
     # Note: the _ variable name can be used when you don't need the value
-    print(1)
-    print(robot.battery_voltage)
-    print(2)
     for _ in range(4):
         robot.drive_straight(distance_mm(150), speed_mmps(50)).wait_for_completed()
         robot.turn_in_place(degrees(90)).wait_for_completed()

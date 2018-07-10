@@ -7,8 +7,6 @@ from Objektpool import Objektpool
 from cockpit import *
 
 
-
-
 class Fenster(QMainWindow,):
     def __init__(self):
 

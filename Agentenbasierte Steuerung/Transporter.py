@@ -5,7 +5,7 @@ from cozmo.objects import CustomObject, CustomObjectMarkers, CustomObjectTypes
 import asyncio
 
 
-distance = 0 
+distance =100 
 turndegrees = 0
 angledegrees = 0
 speed = 100
@@ -58,3 +58,4 @@ def gehSuchen(robot: cozmo.robot.Robot):
 
 
 
+cozmo.run_program(gehSuchen)

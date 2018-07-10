@@ -22,6 +22,7 @@ Cozmo looks around, reacts, and picks up and puts down a cube if found.
 import asyncio
 
 import cozmo
+import time
 from cozmo.util import degrees
 
 
@@ -34,7 +35,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
     try:
         cube = robot.world.wait_for_observed_light_cube(timeout=30)
         print("Found cube", cube)
-
+        
     except asyncio.TimeoutError:
         print("Didn't find a cube :-(")
 
