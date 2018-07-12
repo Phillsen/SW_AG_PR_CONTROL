@@ -11,19 +11,41 @@ angledegrees = 0
 speed = 100
 x_coordinate = 100
 y_coordinate = 50
-Suchobjekt = 1
+
 Maschine1visible = False
 Maschine2visible = False
 Maschine3visible = False
 Maschine4visible = False
 Maschine5visible = False
+
 Zielmaschine = 1
-
 ZielMaschineVisible = False
+ZielmaschVar = None
 
 
 
-def Maschinenauswahl(Target):
+def configMaschVar(M1,M2,M3,M4,M5, Target = Zielmaschine):
+    global ZielmaschVar
+    if Target == 1:
+        ZielmaschVar = M1
+        
+    elif Target == 2:
+        ZielmaschVar = M2
+        
+    elif Target == 3:
+        ZielmaschVar = M3
+        
+    elif Target == 4:
+        ZielmaschVar = M4
+        
+    elif Target == 5:
+        ZielmaschVar = M5
+        
+
+
+
+def ZielMaschineSichtbar(Target=Zielmaschine):
+    global ZielMaschineVisible
     if Target == 1:
         ZielMaschineVisible = Maschine1visible
         print("Zielmaschinevisible = " + str(Maschine1visible))
@@ -39,6 +61,7 @@ def Maschinenauswahl(Target):
     elif Target == 5:
         ZielMaschineVisible = Maschine5visible
         print("Zielmaschinevisible = " + str(Maschine5visible))
+    
 
 
 def MachineVisible(machine):
@@ -51,15 +74,16 @@ def MachineVisible(machine):
     print("Cozmo started seeing a %s" % str(machine.object_type))
     if machine.object_type == CustomObjectTypes.CustomType00:
         Maschine1visible = True
-    elif machine.object_type == CustomObjectTypes.CustomType01:
+    if machine.object_type == CustomObjectTypes.CustomType01:
         Maschine2visible = True
-    elif machine.object_type == CustomObjectTypes.CustomType02:
+    if machine.object_type == CustomObjectTypes.CustomType02:
         Maschine3visible = True
-    elif machine.object_type == CustomObjectTypes.CustomType03:
+    if machine.object_type == CustomObjectTypes.CustomType03:
         Maschine4visible = True
-    elif machine.object_type == CustomObjectTypes.CustomType04:
+    if machine.object_type == CustomObjectTypes.CustomType04:
         Maschine5visible = True
-    Maschinenauswahl(1)
+    ZielMaschineSichtbar()
+
     
 
         
@@ -73,15 +97,16 @@ def MachineInvisible(machine):
     print("Cozmo stopped seeing a %s" % str(machine.object_type))
     if machine.object_type == CustomObjectTypes.CustomType00:
         Maschine1visible = False
-    elif machine.object_type == CustomObjectTypes.CustomType01:
+    if machine.object_type == CustomObjectTypes.CustomType01:
         Maschine2visible = False
-    elif machine.object_type == CustomObjectTypes.CustomType02:
+    if machine.object_type == CustomObjectTypes.CustomType02:
         Maschine3visible = False
-    elif machine.object_type == CustomObjectTypes.CustomType03:
+    if machine.object_type == CustomObjectTypes.CustomType03:
         Maschine4visible = False
-    elif machine.object_type == CustomObjectTypes.CustomType04:
+    if machine.object_type == CustomObjectTypes.CustomType04:
         Maschine5visible = False
-    Maschinenauswahl(1)
+    ZielMaschineSichtbar()
+
 
 
    
@@ -110,22 +135,19 @@ def drive_straight(robot):
     robot.drive_straight(distance_mm(distance), speed_mmps(speed)).wait_for_completed()
 
 
-def lookForMachine(robot, Maschine):
+def lookForMachine(robot):
     global ZielMaschineVisible
-    looper = True
-    while looper == True:
+    while ZielMaschineVisible == False:
         robot.turn_in_place(degrees(10)).wait_for_completed()
-        if ZielMaschineVisible == True:
-            break
-
-    print("abflug")
+       
+    
 
         
 
     
 
 def workloop(robot: cozmo.robot.Robot):
-
+    global ZielmaschVar
     robot.add_event_handler(cozmo.objects.EvtObjectAppeared, handle_object_appeared)
     robot.add_event_handler(cozmo.objects.EvtObjectDisappeared, handle_object_disappeared)
     
@@ -135,17 +157,27 @@ def workloop(robot: cozmo.robot.Robot):
     Maschine4 = robot.world.define_custom_cube(CustomObjectTypes.CustomType03,CustomObjectMarkers.Circles5, 50, 50, 50, True)
     Maschine5 = robot.world.define_custom_cube(CustomObjectTypes.CustomType04,CustomObjectMarkers.Diamonds2, 50, 50, 50, True)
 
+    Maschine1.objectID = 99
+    Maschine2.objectID = 98
+    Maschine3.objectID = 97
+    Maschine4.objectID = 96
+    Maschine5.objectID = 95
+
+
+
     robot.set_head_angle(degrees(8)).wait_for_completed()
     
     
     # dreh dich und such nach der maschine
-    lookForMachine(robot,1)
-    
-    #robot.go_to_object(Maschine1, distance_mm(100))
-
+    lookForMachine(robot)
 
     # positioniere dich zur maschine - 15cm Abstand
+    configMaschVar(Maschine1,Maschine2,Maschine3,Maschine4,Maschine5)
 
+    
+    action = robot.go_to_object(99, distance_mm(70.0))
+
+    action.wait_for_completed()
     # such den würfel
 
     # lade den Würfel auf
