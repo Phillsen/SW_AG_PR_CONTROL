@@ -17,7 +17,7 @@ def Batterycheck(robot: cozmo.robot.Robot):
     
     for c in cubes:
         while c.battery_str == "Unknown":
-            time.sleep(1)
+            time.sleep(0.5)
         print("Cube "+ str(c.cube_id) + " " +c.battery_str)
         if c.battery_str > str(60):
             c.set_lights(cozmo.lights.blue_light)
@@ -32,6 +32,7 @@ def Batterycheck(robot: cozmo.robot.Robot):
         Eingabe = Eingabe.upper()
         if Eingabe == "X":
             break
+    quit()
 
-          
+cozmo.robot.Robot.drive_off_charger_on_connect = False       
 cozmo.run_program(Batterycheck)

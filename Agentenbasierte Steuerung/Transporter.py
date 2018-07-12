@@ -9,38 +9,122 @@ distance =100
 turndegrees = 0
 angledegrees = 0
 speed = 100
-x_coordinate = 0
-y_coordinate = 0
-
+x_coordinate = 100
+y_coordinate = 50
 Suchobjekt = 1
+Maschine1visible = False
+Maschine2visible = False
+Maschine3visible = False
+Maschine4visible = False
+Maschine5visible = False
+Zielmaschine = 1
+
+ZielMaschineVisible = False
 
 
 
+def Maschinenauswahl(Target):
+    if Target == 1:
+        ZielMaschineVisible = Maschine1visible
+        print("Zielmaschinevisible = " + str(Maschine1visible))
+    elif Target == 2:
+        ZielMaschineVisible = Maschine2visible
+        print("Zielmaschinevisible = " + str(Maschine2visible))
+    elif Target == 3:
+        ZielMaschineVisible = Maschine3visible
+        print("Zielmaschinevisible = " + str(Maschine3visible))
+    elif Target == 4:
+        ZielMaschineVisible = Maschine4visible
+        print("Zielmaschinevisible = " + str(Maschine4visible))
+    elif Target == 5:
+        ZielMaschineVisible = Maschine5visible
+        print("Zielmaschinevisible = " + str(Maschine5visible))
+
+
+def MachineVisible(machine):
+    global Maschine1visible
+    global Maschine2visible
+    global Maschine3visible
+    global Maschine4visible
+    global Maschine5visible
+
+    print("Cozmo started seeing a %s" % str(machine.object_type))
+    if machine.object_type == CustomObjectTypes.CustomType00:
+        Maschine1visible = True
+    elif machine.object_type == CustomObjectTypes.CustomType01:
+        Maschine2visible = True
+    elif machine.object_type == CustomObjectTypes.CustomType02:
+        Maschine3visible = True
+    elif machine.object_type == CustomObjectTypes.CustomType03:
+        Maschine4visible = True
+    elif machine.object_type == CustomObjectTypes.CustomType04:
+        Maschine5visible = True
+    Maschinenauswahl(1)
+    
+
+        
+def MachineInvisible(machine):
+    global Maschine1visible
+    global Maschine2visible
+    global Maschine3visible
+    global Maschine4visible
+    global Maschine5visible
+
+    print("Cozmo stopped seeing a %s" % str(machine.object_type))
+    if machine.object_type == CustomObjectTypes.CustomType00:
+        Maschine1visible = False
+    elif machine.object_type == CustomObjectTypes.CustomType01:
+        Maschine2visible = False
+    elif machine.object_type == CustomObjectTypes.CustomType02:
+        Maschine3visible = False
+    elif machine.object_type == CustomObjectTypes.CustomType03:
+        Maschine4visible = False
+    elif machine.object_type == CustomObjectTypes.CustomType04:
+        Maschine5visible = False
+    Maschinenauswahl(1)
+
+
+   
 
 def handle_object_appeared(evt, **kw):
     # This will be called whenever an EvtObjectAppeared is dispatched -
     # whenever an Object comes into view.
     if isinstance(evt.obj, CustomObject):
-        print("Cozmo started seeing a %s" % str(evt.obj.object_type))
+        MachineVisible(evt.obj)
 
 def handle_object_disappeared(evt, **kw):
     # This will be called whenever an EvtObjectDisappeared is dispatched -
     # whenever an Object goes out of view.
     if isinstance(evt.obj, CustomObject):
-        print("Cozmo stopped seeing a %s" % str(evt.obj.object_type))
+        MachineInvisible(evt.obj)
 
-def go_to_coordinate(robot: cozmo.robot.Robot):
+def go_to_coordinate(robot):
     global x_coordinate
     global y_coordinate
     global angledegrees
     robot.go_to_pose(Pose(x_coordinate, y_coordinate, 0, angle_z=degrees(angledegrees)), relative_to_robot=True).wait_for_completed()
 
-def drive_straight(robot: cozmo.robot.Robot):
+def drive_straight(robot):
     global distance
     global speed
     robot.drive_straight(distance_mm(distance), speed_mmps(speed)).wait_for_completed()
 
-def gehSuchen(robot: cozmo.robot.Robot):
+
+def lookForMachine(robot, Maschine):
+    global ZielMaschineVisible
+    looper = True
+    while looper == True:
+        robot.turn_in_place(degrees(10)).wait_for_completed()
+        if ZielMaschineVisible == True:
+            break
+
+    print("abflug")
+
+        
+
+    
+
+def workloop(robot: cozmo.robot.Robot):
 
     robot.add_event_handler(cozmo.objects.EvtObjectAppeared, handle_object_appeared)
     robot.add_event_handler(cozmo.objects.EvtObjectDisappeared, handle_object_disappeared)
@@ -53,7 +137,12 @@ def gehSuchen(robot: cozmo.robot.Robot):
 
     robot.set_head_angle(degrees(8)).wait_for_completed()
     
+    
     # dreh dich und such nach der maschine
+    lookForMachine(robot,1)
+    
+    #robot.go_to_object(Maschine1, distance_mm(100))
+
 
     # positioniere dich zur maschine - 15cm Abstand
 
@@ -69,7 +158,8 @@ def gehSuchen(robot: cozmo.robot.Robot):
 
     # lad den würfel ab
 
-    
+    while True:
+        time.sleep(0.5)
     
     
 
@@ -77,8 +167,8 @@ def gehSuchen(robot: cozmo.robot.Robot):
     #robot.drive_straight(distance_mm(distance), speed_mmps(speed)).wait_for_completed()
 
     #anfangen zu suchen
-    for n in range(0,24):
-        robot.turn_in_place(degrees(30)).wait_for_completed()
+    #for n in range(0,24):
+    #    robot.turn_in_place(degrees(30)).wait_for_completed()
       
-
-cozmo.run_program(gehSuchen, use_3d_viewer=True, use_viewer=True )
+cozmo.robot.Robot.drive_off_charger_on_connect = False 
+cozmo.run_program(workloop)
