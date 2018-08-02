@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>27b21f8a-21de-4943-ac0c-05bae6e6be2a</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>BatteryCheck.py</StartupFile>
+    <StartupFile>Experimente.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
