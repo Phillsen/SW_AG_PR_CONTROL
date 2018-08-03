@@ -4,25 +4,47 @@ from cozmo.objects import LightCube1Id, LightCube2Id, LightCube3Id
 from cozmo.objects import CustomObject, CustomObjectMarkers, CustomObjectTypes
 import asyncio
 import time
-
+import math
 
 
 def workloop(robot: cozmo.robot.Robot):
     robot.set_head_angle(degrees(7)).wait_for_completed()
     MyObjectArchetype = robot.world.define_custom_cube(CustomObjectTypes.CustomType00,CustomObjectMarkers.Circles2, 50, 50, 50, True)
-    my_object_instance = None
-    newpose=  cozmo.util.Pose(120, 0,0,0,0,0,0)
-    newpose2 = cozmo.util.Pose(0, 0,0,0,0,0,0)
+    zeroOffset = 80
+    inputOffset = 100
+    
+
     # wait until we see a custom object
-    while my_object_instance is None:
-        evt = robot.wait_for(cozmo.objects.EvtObjectObserved, timeout=None)
-        if isinstance(evt.obj, CustomObject):
-            my_object_instance = evt.obj
-            
-            newpose2 = my_object_instance.pose - newpose
-            
-    robot.go_to_pose(newpose2).wait_for_completed()
+    while True:
+        offset = zeroOffset + inputOffset
+        my_object_instance = None
+        while my_object_instance is None:
+            evt = robot.wait_for(cozmo.objects.EvtObjectObserved, timeout=None)
+            if isinstance(evt.obj, CustomObject):
+                my_object_instance = evt.obj
+                # find the vector from the object to the robot
+                object_to_robot_vec = robot.pose.position - my_object_instance.pose.position
+                # normalize the vector (so it's length 1.0)
+                object_to_robot_vec_dist = math.sqrt((object_to_robot_vec.x * object_to_robot_vec.x) + (object_to_robot_vec.y * object_to_robot_vec.y) + (object_to_robot_vec.z * object_to_robot_vec.z))
+                normalized_object_to_robot_vec = object_to_robot_vec * (1.0 / object_to_robot_vec_dist)
+                # we can now add X times this vector to the objects position and it will push us X mm towards the robot
+                # e.g. lets push it 50mm back (about 1 Cozmo length)
+                offset_vec = (normalized_object_to_robot_vec * offset)
+                target_pos = my_object_instance.pose.position + offset_vec 
+
+                target_pose = my_object_instance.pose
+                # change the position (set it to the new target_pos we calculated above)
+                target_pose._position = target_pos
+                    
+        robot.go_to_pose(target_pose).wait_for_completed()
+        Taste = None
+        while Taste == None:
+            Taste = input("Abstand zum Objekt(mm): ")
+            inputOffset = int(Taste)
 
 
 
 cozmo.run_program(workloop)
+
+
+
