@@ -194,8 +194,6 @@ def workloop(robot: cozmo.robot.Robot):
     while True:
         time.sleep(0.5)
     
-    
-
     # in die Mitte fahren
     #robot.drive_straight(distance_mm(distance), speed_mmps(speed)).wait_for_completed()
 

@@ -1,16 +1,17 @@
 from time import sleep
 import operator
 import cozmo
-import Agentenklasse
-import Transporter
-
+import _100_Agentenklasse
+import multiprocessing
+import _900_Experimente
+#import Transporter
 
 
 # Transportdauer(s)für die Simulation. Kann beliebeig eingestellt werden. 
 Transportdauer = 1
 
 
-class Transportagent(Agentenklasse.Agent):
+class Transportagent(_100_Agentenklasse.Agent):
     
     def __init__(self, ID, Location, Objektpool):
         super().__init__(ID, Location, Bezeichnung="Transporter")
@@ -31,11 +32,14 @@ class Transportagent(Agentenklasse.Agent):
         self.transportlist.sort(key=operator.attrgetter("dueDate"),reverse=False) 
         
     def Transport(self):
+        
         # Statuswechsel
         self.StatusUpdate("busy")
         self.print("transporting product:" + str(self.transportlist[0].ID) + " from " + str(self.transportlist[0].location.bezeichnung) +" to " +str(self.transportlist[0].destination.bezeichnung))
+        x = "product:" + str(self.transportlist[0].ID)
         # Produkt über Abtransport informieren
         self.transportlist[0].Infoverarbeitung("Abtransport")
+        MainWindow.q.put(x)
 
 
         # Simulation == Es wird einfach mit der "Dummy"-Transportdauer gerechnet

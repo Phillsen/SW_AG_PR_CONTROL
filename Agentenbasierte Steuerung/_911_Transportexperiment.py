@@ -7,17 +7,31 @@ import time
 import math
 
 
+Queue = None
+
 def workloop(robot: cozmo.robot.Robot):
     robot.set_head_angle(degrees(7)).wait_for_completed()
-    MyObjectArchetype = robot.world.define_custom_cube(CustomObjectTypes.CustomType00,CustomObjectMarkers.Circles2, 50, 50, 50, True)
+    #MyObjectArchetype = robot.world.define_custom_cube(CustomObjectTypes.CustomType00,CustomObjectMarkers.Circles2, 50, 50, 50, True)
+
+    #while True:
+    #    while q.empty() is False:
+    #        print("Aaaaaachtuuuuuuung ----------------: " +q.get())
+
+
+
+
     zeroOffset = 80
     inputOffset = 100
     
+    
+
+
 
     # wait until we see a custom object
     while True:
         offset = zeroOffset + inputOffset
         my_object_instance = None
+
         while my_object_instance is None:
             evt = robot.wait_for(cozmo.objects.EvtObjectObserved, timeout=None)
             if isinstance(evt.obj, CustomObject):
@@ -37,14 +51,12 @@ def workloop(robot: cozmo.robot.Robot):
                 target_pose._position = target_pos
                     
         robot.go_to_pose(target_pose).wait_for_completed()
-        Taste = None
-        while Taste == None:
-            Taste = input("Abstand zum Objekt(mm): ")
-            inputOffset = int(Taste)
+        time.sleep(0.5)
+               
+            
 
+def los(q):
+    global Queue
+    Queue = q
 
-
-cozmo.run_program(workloop)
-
-
-
+    cozmo.run_program(workloop)

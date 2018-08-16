@@ -1,12 +1,12 @@
 import operator
 from time import sleep
 import serial
-import Agentenklasse
+import _100_Agentenklasse
 
 
 Speedup = 50         # Zum Debuggen die Prozesszeit um diesen Faktor verkürzen
 
-class Maschinenagent(Agentenklasse.Agent):
+class Maschinenagent(_100_Agentenklasse.Agent):
     serial_port = serial.Serial()
     serial_port.baudrate
     serial_port.timeout

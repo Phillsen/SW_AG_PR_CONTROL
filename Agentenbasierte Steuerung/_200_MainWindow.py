@@ -3,8 +3,10 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5 import QtWidgets , QtGui, QtCore, QtChart
-from Objektpool import Objektpool
+from _000_Objektpool import Objektpool
 from cockpit import *
+import multiprocessing
+import _900_Experimente
 
 
 class Fenster(QMainWindow,):
@@ -113,11 +115,18 @@ class Fenster(QMainWindow,):
     def OpenDBManupulation(self):
         pass
 
+  
+if __name__ == '__main__':
 
-app = QApplication(sys.argv)
-w = Fenster()
+    app = QApplication(sys.argv)
+    w = Fenster()
 
-sys.exit(app.exec_())
+    q = multiprocessing.Queue()
+    CozmoProcess = multiprocessing.Process(target=_900_Experimente.Warteschleife, args=(q,))
+    CozmoProcess.start()
+
+    
+    sys.exit(app.exec_())
 
 
 

@@ -3,8 +3,6 @@ from cozmo.objects import LightCube1Id, LightCube2Id, LightCube3Id
 import time
 
 
-
-
 def Batterycheck(robot: cozmo.robot.Robot):
     
     print("Battery Cozmo: " + str(round(robot.battery_voltage,2)) + "Volt")

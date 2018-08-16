@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>27b21f8a-21de-4943-ac0c-05bae6e6be2a</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Experimente.py</StartupFile>
+    <StartupFile>_200_MainWindow.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,10 +22,10 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Agentenklasse.py">
+    <Compile Include="_100_Agentenklasse.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="cockpit.py" />
+    <Compile Include="_210_Cockpit.py" />
     <Compile Include="cozmo\cozmo_sdk_examples_1.4.2\apps\3d_viewer.py" />
     <Compile Include="cozmo\cozmo_sdk_examples_1.4.2\apps\cli.py" />
     <Compile Include="cozmo\cozmo_sdk_examples_1.4.2\apps\color_finder.py" />
@@ -85,29 +85,38 @@
     <Compile Include="cozmo\cozmo_sdk_examples_1.4.2\tutorials\05_async_python\01_cube_blinker_sync.py" />
     <Compile Include="cozmo\cozmo_sdk_examples_1.4.2\tutorials\05_async_python\02_cube_blinker.py" />
     <Compile Include="cozmo\cozmo_sdk_examples_1.4.2\tutorials\06_actions\01_parallel_actions.py" />
-    <Compile Include="Experimente.py">
+    <Compile Include="_900_Experimente.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Lageragent.py">
+    <Compile Include="_140_Lageragent.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.py" />
-    <Compile Include="Maschinenagent.py">
+    <Compile Include="Main.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BatteryCheck.py">
+    <Compile Include="_200_MainWindow.py" />
+    <Compile Include="_110_Maschinenagent.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Objektpool.py">
+    <Compile Include="_920_BatteryCheck.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Transportagent.py">
+    <Compile Include="_910_multiprocessing_experimente.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Produktagent.py">
+    <Compile Include="_000_Objektpool.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Transporter.py">
+    <Compile Include="_130_Transportagent.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="_120_Produktagent.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="_131_Transporter.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="_911_Transportexperiment.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

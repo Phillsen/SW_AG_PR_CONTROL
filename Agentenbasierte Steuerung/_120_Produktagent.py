@@ -1,7 +1,7 @@
 from time import sleep
-import Agentenklasse
+import _100_Agentenklasse
 
-class Produktagent(Agentenklasse.Agent):
+class Produktagent(_100_Agentenklasse.Agent):
     
     def __init__(self, ID, DueDate, ProcessList, Prozessparameter, RessourcenListe, Transporter, Location, Bezeichnung="Produkt"):
         super().__init__(ID, Location, Bezeichnung)
