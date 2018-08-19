@@ -22,7 +22,12 @@ class Transportagent(_100_Agentenklasse.Agent):
         
 
     def Transportrequest(self,TransportItem):   
-        self.print("Product No." + str(TransportItem.ID) + " registered for transport from " + str(TransportItem.location.bezeichnung) + " to " + str(TransportItem.destination.bezeichnung))
+        self.print("Product No." + str(TransportItem.ID) 
+                   + " registered for transport from " 
+                   + str(TransportItem.location.bezeichnung) 
+                   + " to " 
+                   + str(TransportItem.destination.bezeichnung))
+
         # Das anfragende Produkt in die Transportliste eintragen
         self.transportlist.append(TransportItem)
 
@@ -32,16 +37,15 @@ class Transportagent(_100_Agentenklasse.Agent):
         self.transportlist.sort(key=operator.attrgetter("dueDate"),reverse=False) 
         
     def Transport(self):
-        
         # Statuswechsel
         self.StatusUpdate("busy")
-        self.print("transporting product:" + str(self.transportlist[0].ID) + " from " + str(self.transportlist[0].location.bezeichnung) +" to " +str(self.transportlist[0].destination.bezeichnung))
-        x = "product:" + str(self.transportlist[0].ID)
+        self.print("transporting product:" + str(self.transportlist[0].ID) 
+                   + " from " + str(self.transportlist[0].location.bezeichnung) 
+                   +" to " +str(self.transportlist[0].destination.bezeichnung))
+               
         # Produkt über Abtransport informieren
         self.transportlist[0].Infoverarbeitung("Abtransport")
-        MainWindow.q.put(x)
-
-
+        
         # Simulation == Es wird einfach mit der "Dummy"-Transportdauer gerechnet
         if self.objektpool.simulation == True:
             sleep(Transportdauer)
@@ -49,9 +53,7 @@ class Transportagent(_100_Agentenklasse.Agent):
         # Demo == Cozmo verursacht die Transportzeit
         elif self.objektpool.simulation == False:
             pass
-            #Cozmokram
-        
-        
+             
         #Produktstandort aktualisieren 
         self.transportlist[0].location = self.transportlist[0].destination
         # Produkt über Ankunft informieren
@@ -63,8 +65,6 @@ class Transportagent(_100_Agentenklasse.Agent):
         # Statuswechsel
         self.StatusUpdate("wait")
               
-
-
  
     def run(self):
 

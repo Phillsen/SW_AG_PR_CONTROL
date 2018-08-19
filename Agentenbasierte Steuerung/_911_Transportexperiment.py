@@ -11,7 +11,7 @@ Queue = None
 
 def workloop(robot: cozmo.robot.Robot):
     robot.set_head_angle(degrees(7)).wait_for_completed()
-    #MyObjectArchetype = robot.world.define_custom_cube(CustomObjectTypes.CustomType00,CustomObjectMarkers.Circles2, 50, 50, 50, True)
+    MyObjectArchetype = robot.world.define_custom_cube(CustomObjectTypes.CustomType00,CustomObjectMarkers.Circles2, 50, 50, 50, True)
 
     #while True:
     #    while q.empty() is False:
@@ -24,8 +24,6 @@ def workloop(robot: cozmo.robot.Robot):
     inputOffset = 100
     
     
-
-
 
     # wait until we see a custom object
     while True:

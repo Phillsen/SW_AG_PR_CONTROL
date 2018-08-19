@@ -1,13 +1,15 @@
 import pymysql
 import threading
-from _120_Produktagent import Produktagent
-from _130_Transportagent import Transportagent
-from _110_Maschinenagent import Maschinenagent
-from _140_Lageragent import Lageragent
-import sys
 from time import sleep
+from _100_Agents import Produktagent , Maschinenagent, Transportagent, Lageragent
+#from _110_Maschinenagent import Maschinenagent
+#from _120_Produktagent import Produktagent
+#from _130_Transportagent import Transportagent
+#from _140_Lageragent import Lageragent
 
 
+        #self.DB = ("localhost",    "AgentenSystem",    "ProzessDB",3306,   "prozessdaten", Simulation)  
+        #def __init__( Host,        User,               PWD,        Port,   DB,             Simulation):
 
 class Objektpool(threading.Thread):
 
@@ -30,7 +32,8 @@ class Objektpool(threading.Thread):
         self.Lager = None
         self.start()
         self.Programmende = False
-
+        #self.DB = Objektpool("localhost","AgentenSystem","ProzessDB",3306,"prozessdaten",Simulation)  
+        #def __init__(self, Host,User,PWD,Port,DB, Simulation):
     def LagerAnlegen(self):
         self.Lager = Lageragent(0,(0,0),"Lager")
         self.Lagerlocation = self.Lager
