@@ -11,20 +11,10 @@ import random
 import time
 
 
-
-# Programming guideline: Max 79 chars per line of code:
-# https://www.python.org/dev/peps/pep-0008/
-#------------------------------------------------------------------------------
-
-
-
-
 class main(threading.Thread):
-    #global Transportliste
 
     def __init__(self):
         threading.Thread.__init__(self)
-
         self.simulation = None 
         self.host = "localhost"
         self.user = "AgentenSystem"
@@ -38,25 +28,20 @@ class main(threading.Thread):
         self.Lager = None
         self.FensterAnlegen()
         self.start()
-     
 
     def FensterAnlegen(self):
         self.App = QApplication(sys.argv)
         self.Hauptfenster = Fenster(self)
         sys.exit(self.App.exec_())
-        
 
     def LagerAnlegen(self):
         # Lagerposition lorrekt anlegen <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< To Do
         self.Lager = Lageragent(0,(0,0),"Lager")
         self.Lagerlocation = self.Lager.location
 
-
     def TransportAgentAnlegen(self):
-        #global Transportliste
         self.Transporter = Transportagent(1,self.Lagerlocation,self)
-
-
+        
     def RessourcenInstanzAnlegen(self,ID,Bezeichnung,ComPort):
         Agentenvariable = "M"+str(ID)
         Agentenvariable = Maschinenagent(ID,Bezeichnung,ComPort,self, self.simulation, (0,0))
@@ -80,20 +65,19 @@ class main(threading.Thread):
         data = cursor.fetchall()
         for n in data:
             self.RessourcenInstanzAnlegen(n[0],n[1],n[2])
+            print("{0} ist Online".format(n))
         conn.close()
-
 
     def ProdukteAusDBLesen(self):
         conn = pymysql.connect(host=self.host, user=self.user, passwd=self.pwd, port=self.port, db=self.db)
         cursor = conn.cursor()
-        sql = ('SELECT * FROM produkte WHERE ProduktID = 1')
+        sql = ('SELECT * FROM produkte')
         cursor.execute(sql)
         data = cursor.fetchall()
 
         for n in data:
             self.ProduktInstanzAnlegen(n[0],n[1],n[2],n[3])
         conn.close()
-
 
     def RessourcenListe(self, Process):
         for n in self.produkte:
@@ -105,32 +89,21 @@ class main(threading.Thread):
             
     def SimuStart(self):
         self.LagerAnlegen()
+        self.RessourcenAusDBLesen()
         self.TransportAgentAnlegen()
         time.sleep(1)
-        self.RessourcenAusDBLesen()
+        
         self.ProdukteAusDBLesen()
      
     def Auswertung(self):
         self.Auswertefenster = CockpitWidget(self)
         self.Auswertefenster.show() 
         
-
     def run(self):
         while True:
             pass
 
 
-
 if __name__ == '__main__':
-    #global Transportliste
-    #Transportliste = multiprocessing.Queue()
-    #Test = multiprocessing.Process(target=_300_Cozmo.runCozmo, args=(Transportliste,))
-    #Test.start()
-
-    main()
-
-
-
-
-
     
+    main()

@@ -1,10 +1,11 @@
 import cozmo
+from cozmo.util import degrees, distance_mm, speed_mmps
 from cozmo.objects import LightCube1Id, LightCube2Id, LightCube3Id
 import time
 
 
 def Batterycheck(robot: cozmo.robot.Robot):
-    
+    robot.set_head_angle(degrees(7)).wait_for_completed()
     print("Battery Cozmo: " + str(round(robot.battery_voltage,2)) + "Volt")
 
     cube1 = robot.world.get_light_cube(LightCube1Id)
@@ -24,7 +25,8 @@ def Batterycheck(robot: cozmo.robot.Robot):
         else:
             c.set_lights(cozmo.lights.red_light)
 
-    time.sleep(5)
+    while True:
+       time.sleep(1)
     quit()
 
 cozmo.robot.Robot.drive_off_charger_on_connect = False       

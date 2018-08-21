@@ -7,8 +7,6 @@ from PyQt5 import QtWidgets , QtGui, QtCore, QtChart
 from _000_Objektpool import Objektpool
 
 
-
-
 class Fenster(QMainWindow,):
 
     def __init__(self,mainProgram):
@@ -16,13 +14,11 @@ class Fenster(QMainWindow,):
         super().__init__()
         self.MainProgramm = mainProgram
         self.initMe()
-        
 
     def initMe(self):
         self.counter = 0
         self.setObjectName("MainWindow")
         self.setWindowIcon(QIcon("lightbulb2.png"))
-           
         self.resize(800,600)
         self.centralwidget = QtWidgets.QWidget(self)
         self.centralwidget.setObjectName("centralwidget")
@@ -51,7 +47,6 @@ class Fenster(QMainWindow,):
         self.startButton.setToolTip("Startet den Simulationslauf")
         self.verticalLayout.addWidget(self.startButton)
         self.radioButton = QtWidgets.QRadioButton(self.frame_3)
-        
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(False)
@@ -79,7 +74,6 @@ class Fenster(QMainWindow,):
         self.statusBar().showMessage("Programmiert von Philip Diem")
         self.retranslateUi()
         QtCore.QMetaObject.connectSlotsByName(self)
-
         self.startButton.clicked.connect(self.StartSimulation)
         self.cockpitButton.clicked.connect(self.Auswertung)
         # Create a QTimer
@@ -97,20 +91,15 @@ class Fenster(QMainWindow,):
         self.radioButton.setText(_translate("MainWindow", "Simu Modus"))
 
     def StartSimulation(self):
-
         Simulation = self.radioButton.isChecked()
         self.startButton.hide()
         self.MainProgramm.UseCozmo(Simulation)
         self.MainProgramm.SimuStart()
-        
-
 
     def Auswertung(self):
         self.MainProgramm.Auswertung()
         print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
         
-
-
     def OpenDBManupulation(self):
         pass
 
@@ -120,12 +109,9 @@ class CockpitWidget(QWidget):
     def __init__(self, mainProgram):
         super().__init__()
         self.DB = mainProgram
-                
         self.initMe()
-        
 
     def initMe(self):
-
         self.setObjectName("CockpitWidget")
         self.setWindowIcon(QIcon("BarChart2.png"))
         self.resize(1000, 800)
@@ -145,90 +131,65 @@ class CockpitWidget(QWidget):
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.machineFrame)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.verticalLayout.addWidget(self.machineFrame)
-
         self.retranslateUi(self)
         QtCore.QMetaObject.connectSlotsByName(self)
         self.setObjectName("Cockpit")
-         
         self.productWaiting = QBarSet("Waiting")
         self.productWaiting.setColor(QColor("red"))
         self.productProcessing = QBarSet("Processing")
         self.productProcessing.setColor(QColor("green"))
         self.productTransport = QBarSet("Transport")
         self.productTransport.setColor(QColor("yellow"))
-
        
         # Variablen hier einfügen ------------------------------------------------------------------------------
-        
         self.productWaiting.append([self.DB.produkte[0].waitTime, self.DB.produkte[1].waitTime, self.DB.produkte[2].waitTime, self.DB.produkte[3].waitTime,self.DB.produkte[4].waitTime, self.DB.produkte[5].waitTime ])
         self.productProcessing.append([self.DB.produkte[0].processTime, self.DB.produkte[1].processTime, self.DB.produkte[2].processTime, self.DB.produkte[3].processTime, self.DB.produkte[4].processTime, self.DB.produkte[5].processTime])
         self.productTransport.append([self.DB.produkte[0].transportTime, self.DB.produkte[1].transportTime, self.DB.produkte[2].transportTime, self.DB.produkte[3].transportTime, self.DB.produkte[4].transportTime, self.DB.produkte[5].transportTime])
-
-                
         
         # Variablen hier einfügen ------------------------------------------------------------------------------
-        
         self.productSeries = QStackedBarSeries()
         self.productSeries.append(self.productWaiting)
         self.productSeries.append(self.productTransport)
         self.productSeries.append(self.productProcessing)
-        
-        
-
-
         self.machineIdle = QBarSet("Idle")
         self.machineProcessing = QBarSet("Processing")
 
-
         # Variablen hier einfügen ------------------------------------------------------------------------------
-
         self.machineIdle.append([self.DB.ressourcen[0].waitTime, self.DB.ressourcen[1].waitTime, self.DB.ressourcen[2].waitTime, self.DB.ressourcen[3].waitTime, self.DB.ressourcen[4].waitTime])
         self.machineProcessing.append([self.DB.ressourcen[0].processTime, self.DB.ressourcen[1].processTime, self.DB.ressourcen[2].processTime, self.DB.ressourcen[3].processTime, self.DB.ressourcen[4].processTime])
 
-
         # Variablen hier einfügen ------------------------------------------------------------------------------
-
         self.machineSeries = QPercentBarSeries()
         self.machineSeries.append(self.machineIdle)
         self.machineSeries.append(self.machineProcessing)
-
         self.productChart = QChart()
         self.machineChart = QChart()
-
         self.productChart.addSeries(self.productSeries)
         self.machineChart.addSeries(self.machineSeries)
-
         self.productChart.setTitle("Zusammensetzung der DLZ")
         self.machineChart.setTitle("Prozentuale Statusverteilung")
         self.productChart.setAnimationOptions(QChart.SeriesAnimations)
         self.machineChart.setAnimationOptions(QChart.SeriesAnimations)
-
         self.productCategories = ["Produkt 1", "Produkt 2", "Produkt 3", "Produkt 4", "Produkt 5", "Produkt 6"]
         self.machineCategories = ["Schweissen", "Montieren", "Kalibrieren", "Prüfen", "Verpacken"]
-
         self.productAxis = QBarCategoryAxis()
         self.machineAxis = QBarCategoryAxis()
-
         self.productAxis.append(self.productCategories)
         self.machineAxis.append(self.machineCategories)
         self.machineChart.createDefaultAxes()
         self.machineChart.setAxisX(self.machineAxis,self.machineSeries)
         self.productChart.createDefaultAxes()
         self.productChart.setAxisX(self.productAxis, self.productSeries)
-
         self.productChart.legend().setVisible(True)
         self.machineChart.legend().setVisible(True)
         self.productChart.legend().setAlignment(Qt.AlignBottom)
         self.machineChart.legend().setAlignment(Qt.AlignBottom)
-
         self.productChartView = QChartView(self.productChart,self.machineFrame)
         self.verticalLayout_2.addWidget(self.productChartView)
         self.machineChartView = QChartView(self.machineChart,self.productFrame)
         self.verticalLayout_3.addWidget(self.machineChartView)
-        
         self.productChartView.setRenderHint(QPainter.Antialiasing)
         self.machineChartView.setRenderHint(QPainter.Antialiasing)
-
         self.productChartView.resize(600, 300)
         self.machineChartView.resize(600, 300)
         self.productChartView.setWindowTitle("Produktstatus")
@@ -237,9 +198,7 @@ class CockpitWidget(QWidget):
         self.machineChartView.setWindowIcon(QIcon("BarChart2.png"))
         self.productChartView.show()
         self.machineChartView.show()
-
         
     def retranslateUi(self, Cockpit):
         _translate = QtCore.QCoreApplication.translate
         Cockpit.setWindowTitle(_translate("Cockpit", "Cockpit"))
-

@@ -7,23 +7,13 @@ import time
 import math
 
 
-Queue = None
-
 def workloop(robot: cozmo.robot.Robot):
     robot.set_head_angle(degrees(7)).wait_for_completed()
     MyObjectArchetype = robot.world.define_custom_cube(CustomObjectTypes.CustomType00,CustomObjectMarkers.Circles2, 50, 50, 50, True)
 
-    #while True:
-    #    while q.empty() is False:
-    #        print("Aaaaaachtuuuuuuung ----------------: " +q.get())
-
-
-
-
     zeroOffset = 80
     inputOffset = 100
-    
-    
+       
 
     # wait until we see a custom object
     while True:
@@ -53,8 +43,4 @@ def workloop(robot: cozmo.robot.Robot):
                
             
 
-def los(q):
-    global Queue
-    Queue = q
-
-    cozmo.run_program(workloop)
+cozmo.run_program(workloop)

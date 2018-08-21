@@ -6,12 +6,10 @@ import multiprocessing
 from time import sleep
 import _300_Cozmo
 
-
 Transportdauer = 1
-Speedup = 10
+Speedup = 5
 Transportliste = None
 Feedback = None
-
 
 class Agent(threading.Thread):
 
@@ -81,7 +79,7 @@ class Maschinenagent(Agent):
 
     def __init__(self, ID, Bezeichnung,ComPort,DB, Simulation, Location):
         super().__init__(ID, Location, Bezeichnung)
-        self.simulation = True #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Achtung manuell überbrückt! <<<<<<<<<<<<<<<<<
+        self.simulation = Simulation #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Achtung manuell überbrückt! <<<<<<<<<<<<<<<<<
         self.DB = DB
         self.serial_port = serial.Serial()
         self.serial_port.baudrate = 9600
@@ -89,8 +87,7 @@ class Maschinenagent(Agent):
         self.serial_port.port = ComPort
         self.waitlist =[]
         self.queue = []
-    
-        
+            
         if self.simulation == False:
             if self.serial_port.isOpen(): 
                 self.serial_port.close()
@@ -201,7 +198,6 @@ class Produktagent(Agent):
             self.destination = next((x for x in self.ressourcenliste if x.bezeichnung == Zielbezeichnung), None)
             self.print("nächstes Ziel = Ressource" + str(self.destination.ID) + "(" + self.destination.bezeichnung + ")")
         
-
     def Transportrequest(self):
         self.print("Fordere Transport an.")
         #Einen Weg finden den Transporter anzusprechen
@@ -245,8 +241,6 @@ class Transportagent(Agent):
                    + str(TransportItem.location.bezeichnung) 
                    + " to " 
                    + str(TransportItem.destination.bezeichnung))
-
-        # Das anfragende Produkt in die Transportliste eintragen
         self.transportlist.append(TransportItem)
 
     def GetPriority(self):
@@ -273,10 +267,9 @@ class Transportagent(Agent):
             Transportauftrag = []
             Transportauftrag.append(self.transportlist[0].ID)
             Transportauftrag.append(self.transportlist[0].destination.bezeichnung)
+            Transportauftrag.append(self.transportlist[0].destination.ID)
 
-
-
-
+            
             Transportliste.put(Transportauftrag)
             while Feedback.empty() is True:
                 sleep(0.5)
@@ -294,7 +287,6 @@ class Transportagent(Agent):
         del self.transportlist[0]
         # Statuswechsel
         self.StatusUpdate("wait")
-              
  
     def run(self):
         

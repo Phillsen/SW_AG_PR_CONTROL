@@ -37,7 +37,7 @@ def cozmo_program(robot: cozmo.robot.Robot):
         cozmo.logger.warning("Cozmo is not connected to a LightCube1Id cube - check the battery.")
 
     if cube2 is not None:
-        cube2.set_lights(cozmo.lights.green_light)
+        cube2.set_lights(cozmo.lights.off_light)
     else:
         cozmo.logger.warning("Cozmo is not connected to a LightCube2Id cube - check the battery.")
 
