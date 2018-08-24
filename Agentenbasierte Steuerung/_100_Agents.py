@@ -19,7 +19,7 @@ class Agent(threading.Thread):
         self.location = Location
         self.bezeichnung = Bezeichnung
         self.printIdent = Bezeichnung + " " + str(self.ID)+ ": "
-        self.status = None
+        self.status = "wait"
         self.lastStatus = None
         self.busyTime = 0
         self.processTime = 0
@@ -41,7 +41,7 @@ class Agent(threading.Thread):
         self.status = Status
         self.KPI_Logger()
 
-    def KPI_Logger(self,):
+    def KPI_Logger(self):
         self.now = datetime.datetime.now()
         TimeSpanSinceLastStatus = float((self.now-self.lastStatusChangeTimestamp).total_seconds())
 

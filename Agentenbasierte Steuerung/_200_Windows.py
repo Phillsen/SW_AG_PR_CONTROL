@@ -134,11 +134,11 @@ class CockpitWidget(QWidget):
         self.retranslateUi(self)
         QtCore.QMetaObject.connectSlotsByName(self)
         self.setObjectName("Cockpit")
-        self.productWaiting = QBarSet("Waiting")
+        self.productWaiting = QBarSet("Wartezeit")
         self.productWaiting.setColor(QColor("red"))
-        self.productProcessing = QBarSet("Processing")
+        self.productProcessing = QBarSet("Prozesszeit")
         self.productProcessing.setColor(QColor("green"))
-        self.productTransport = QBarSet("Transport")
+        self.productTransport = QBarSet("Transportzeit")
         self.productTransport.setColor(QColor("yellow"))
        
         # Variablen hier einfügen ------------------------------------------------------------------------------
@@ -149,19 +149,14 @@ class CockpitWidget(QWidget):
             self.productWaiting.append(Wartezeit)
             self.productProcessing.append(ProzessZeit)
             self.productTransport.append(TransportZeit)
-
-
-        #self.productWaiting.append([self.DB.produkte[0].waitTime, self.DB.produkte[1].waitTime, self.DB.produkte[2].waitTime, self.DB.produkte[3].waitTime,self.DB.produkte[4].waitTime, self.DB.produkte[5].waitTime ])
-        #self.productProcessing.append([self.DB.produkte[0].processTime, self.DB.produkte[1].processTime, self.DB.produkte[2].processTime, self.DB.produkte[3].processTime, self.DB.produkte[4].processTime, self.DB.produkte[5].processTime])
-        #self.productTransport.append([self.DB.produkte[0].transportTime, self.DB.produkte[1].transportTime, self.DB.produkte[2].transportTime, self.DB.produkte[3].transportTime, self.DB.produkte[4].transportTime, self.DB.produkte[5].transportTime])
         
         # Variablen hier einfügen ------------------------------------------------------------------------------
         self.productSeries = QStackedBarSeries()
         self.productSeries.append(self.productWaiting)
         self.productSeries.append(self.productTransport)
         self.productSeries.append(self.productProcessing)
-        self.machineIdle = QBarSet("Idle")
-        self.machineProcessing = QBarSet("Processing")
+        self.machineIdle = QBarSet("Wartet")
+        self.machineProcessing = QBarSet("Arbeitet")
 
         # Variablen hier einfügen ------------------------------------------------------------------------------
         self.machineIdle.append([self.DB.ressourcen[0].waitTime, self.DB.ressourcen[1].waitTime, self.DB.ressourcen[2].waitTime, self.DB.ressourcen[3].waitTime, self.DB.ressourcen[4].waitTime])
@@ -179,12 +174,18 @@ class CockpitWidget(QWidget):
         self.machineChart.setTitle("Prozentuale Statusverteilung")
         self.productChart.setAnimationOptions(QChart.SeriesAnimations)
         self.machineChart.setAnimationOptions(QChart.SeriesAnimations)
+
         self.productCategories = []
+        self.machineCategories = []
+
         for Eintraege in self.DB.produkte:
             Balkenbezeichnung = "Produkt " +str(Eintraege.ID)
             self.productCategories.append(Balkenbezeichnung)
         
-        self.machineCategories = ["Schweissen", "Montieren", "Kalibrieren", "Prüfen", "Verpacken"]
+        for Eintrag in self.DB.ressourcen:
+            RessourcenBezeichnung = Eintrag.bezeichnung
+            self.machineCategories.append(RessourcenBezeichnung)
+        
         self.productAxis = QBarCategoryAxis()
         self.machineAxis = QBarCategoryAxis()
         self.productAxis.append(self.productCategories)
