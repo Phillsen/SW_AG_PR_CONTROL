@@ -7,7 +7,7 @@ from time import sleep
 import _300_Cozmo
 
 Transportdauer = 1
-Speedup = 5
+Speedup = 50
 Transportliste = None
 Feedback = None
 
@@ -31,6 +31,7 @@ class Agent(threading.Thread):
         self.endzeit = None
         self.durchlaufzeit = None
         self.now = None
+        
 
     def print(self, Info):
         print(self.printIdent + Info)
@@ -79,7 +80,7 @@ class Maschinenagent(Agent):
 
     def __init__(self, ID, Bezeichnung,ComPort,DB, Simulation, Location):
         super().__init__(ID, Location, Bezeichnung)
-        self.simulation = Simulation #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Achtung manuell überbrückt! <<<<<<<<<<<<<<<<<
+        self.simulation = Simulation 
         self.DB = DB
         self.serial_port = serial.Serial()
         self.serial_port.baudrate = 9600
@@ -92,7 +93,9 @@ class Maschinenagent(Agent):
             if self.serial_port.isOpen(): 
                 self.serial_port.close()
             self.serial_port.open()
-        self.printBluetooth("Statusupdate 2")
+            print("{0} ist Online".format(self.bezeichnung))
+            self.printBluetooth("Statusupdate 2")
+        
 
     def MachineCom(self):
         if self.status == "wait":
@@ -224,14 +227,16 @@ class Transportagent(Agent):
         super().__init__(ID, Location, Bezeichnung="Transporter")
         global Transportliste
         global Feedback
-        Transportliste = multiprocessing.Queue()
-        Feedback = multiprocessing.Queue()
-        CozmoProzess = multiprocessing.Process(target=_300_Cozmo.runCozmo, args=(Transportliste,Feedback))
-        CozmoProzess.start()
-
+        
         self.transportlist = []
         self.status = "wait"   # wait, busy
         self.objektpool = Objektpool
+        if self.objektpool.simulation == False:
+            Transportliste = multiprocessing.Queue()
+            Feedback = multiprocessing.Queue()
+            CozmoProzess = multiprocessing.Process(target=_300_Cozmo.runCozmo, args=(Transportliste,Feedback))
+            CozmoProzess.start()
+
         self.Auftrag = None
         self.start()
 

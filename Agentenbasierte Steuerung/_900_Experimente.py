@@ -7,37 +7,59 @@ import time
 import math
 
 
+def getCube(robot,cube):
+
+    robot.set_head_angle(degrees(7)).wait_for_completed()
+    robot.pickup_object(cube, num_retries=3).wait_for_completed()
+    print("cozmo hat Cube aufgeladen")
+
+def Transport(robot,cube):
+
+    MA1_Schweissen = robot.world.define_custom_cube(CustomObjectTypes.CustomType00,CustomObjectMarkers.Circles2, 50, 50, 50, True)
+    MA1_Anfahrpunkt = cozmo.util.Pose(300, 300, 0, angle_z=degrees(180))
+    print("Stage 2")
+
+    offset = 180
+    robot.go_to_pose(MA1_Anfahrpunkt).wait_for_completed()
+
+    my_object_instance = None
+    print("Stage 3")
+    while my_object_instance is None:
+        print("Suche nach Objekt")
+        evt = robot.wait_for(cozmo.objects.EvtObjectObserved, timeout=None)
+        if isinstance(evt.obj, CustomObject):
+            my_object_instance = evt.obj
+
+            # find the vector from the object to the robot
+            object_to_robot_vec = robot.pose.position - my_object_instance.pose.position
+
+            # normalize the vector (so it's length 1.0)
+            object_to_robot_vec_dist = math.sqrt((object_to_robot_vec.x * object_to_robot_vec.x) + (object_to_robot_vec.y * object_to_robot_vec.y) + (object_to_robot_vec.z * object_to_robot_vec.z))
+            normalized_object_to_robot_vec = object_to_robot_vec * (1.0 / object_to_robot_vec_dist)
+            # we can now add X times this vector to the objects position and it will push us X mm towards the robot
+            # e.g. lets push it 50mm back (about 1 Cozmo length)
+            offset_vec = (normalized_object_to_robot_vec * offset)
+            target_pos = my_object_instance.pose.position + offset_vec 
+
+            target_pose = my_object_instance.pose
+            # change the position (set it to the new target_pos we calculated above)
+            target_pose._position = target_pos
+                    
+    robot.go_to_pose(target_pose).wait_for_completed()
+    robot.place_object_on_ground_here(cube1, num_retries=1).wait_for_completed()
 
 
 def workloop(robot: cozmo.robot.Robot):
 
-    MA1_fixed_object = robot.world.create_custom_fixed_object(Pose(0, 300, 0, angle_z=degrees(0)), 50, 100, 60, relative_to_robot=False)
-    MA2_fixed_object = robot.world.create_custom_fixed_object(Pose(0, 700, 0, angle_z=degrees(0)), 50, 100, 60, relative_to_robot=False)
-    MA3_fixed_object = robot.world.create_custom_fixed_object(Pose(400, 1000, 0, angle_z=degrees(90)), 50, 100, 60, relative_to_robot=False)
-    MA4_fixed_object = robot.world.create_custom_fixed_object(Pose(800, 700, 0, angle_z=degrees(0)), 50, 100, 60, relative_to_robot=False)
-    MA5_fixed_object = robot.world.create_custom_fixed_object(Pose(800, 300, 0, angle_z=degrees(0)), 50, 100, 60, relative_to_robot=False)
+    
+    cube = robot.world.get_light_cube(LightCube1Id)
 
-    MA1_Anfahrpunkt = cozmo.util.Pose(300, 300, 0, angle_z=degrees(180))
-    MA2_Anfahrpunkt = cozmo.util.Pose(300, 700, 0, angle_z=degrees(180))
-    MA3_Anfahrpunkt = cozmo.util.Pose(380, 700, 0, angle_z=degrees(90))
-    MA4_Anfahrpunkt = cozmo.util.Pose(500, 700, 0, angle_z=degrees(0))
-    MA5_Anfahrpunkt = cozmo.util.Pose(500, 300, 0, angle_z=degrees(0))
-    X = cozmo.util.Pose(5, 5, 0, angle_z=degrees(0))
-    Basis = cozmo.util.Pose(0, 0, 0, angle_z=degrees(0))
+    getCube(robot, cube)
 
-
-
-    Anfahrpunkte = []
-    Anfahrpunkte.append(MA1_Anfahrpunkt)
-    Anfahrpunkte.append(MA2_Anfahrpunkt)
-    Anfahrpunkte.append(MA3_Anfahrpunkt)
-    Anfahrpunkte.append(MA4_Anfahrpunkt)
-    Anfahrpunkte.append(MA5_Anfahrpunkt)
-    Anfahrpunkte.append(X)
-
-     
-    for n in Anfahrpunkte:
-        robot.go_to_pose(n, relative_to_robot=False).wait_for_completed()
+    Transport(robot,cube)
+    
+    
+    
 
 
 cozmo.run_program(workloop, use_3d_viewer = False)

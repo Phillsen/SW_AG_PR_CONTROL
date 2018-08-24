@@ -36,7 +36,7 @@ class main(threading.Thread):
 
     def LagerAnlegen(self):
         # Lagerposition lorrekt anlegen <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< To Do
-        self.Lager = Lageragent(0,(0,0),"Lager")
+        self.Lager = Lageragent(6,(0,0),"Lager")
         self.Lagerlocation = self.Lager.location
 
     def TransportAgentAnlegen(self):
@@ -65,7 +65,7 @@ class main(threading.Thread):
         data = cursor.fetchall()
         for n in data:
             self.RessourcenInstanzAnlegen(n[0],n[1],n[2])
-            print("{0} ist Online".format(n))
+            
         conn.close()
 
     def ProdukteAusDBLesen(self):

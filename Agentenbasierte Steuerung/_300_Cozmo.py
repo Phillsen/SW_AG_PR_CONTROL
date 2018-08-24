@@ -10,6 +10,8 @@ Transportliste = None
 Feedback = None
 
 
+
+
 def getCube(robot,cube):
 
     robot.set_head_angle(degrees(7)).wait_for_completed()
@@ -23,11 +25,13 @@ def Transport(robot, Auftrag, cube):
     MA3_Anfahrpunkt = cozmo.util.Pose(380, 700, 0, angle_z=degrees(90))
     MA4_Anfahrpunkt = cozmo.util.Pose(500, 700, 0, angle_z=degrees(0))
     MA5_Anfahrpunkt = cozmo.util.Pose(500, 300, 0, angle_z=degrees(0))
+    LagerAnfahrpunkt = cozmo.util.Pose(500, 200, 0, angle_z=degrees(270))
             
 
     Anfahrpunkt = None
     Maschine = None
     Object = None
+    print("Transportauftrag: " +str(Auftrag[2])+ "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
 
     if Auftrag[2] == 1:
         #MA1_Schweissen = robot.world.define_custom_cube(CustomObjectTypes.CustomType00,CustomObjectMarkers.Circles2, 50, 50, 50, True)
@@ -58,7 +62,13 @@ def Transport(robot, Auftrag, cube):
         Object = robot.world.define_custom_cube(CustomObjectTypes.CustomType04,CustomObjectMarkers.Diamonds2, 50, 50, 50, True)
         Anfahrpunkt = MA5_Anfahrpunkt
         robot.go_to_pose(MA5_Anfahrpunkt).wait_for_completed()
-
+    elif Auftrag[2] == 6:
+        #MA5_Verpacken = robot.world.define_custom_cube(CustomObjectTypes.CustomType04,CustomObjectMarkers.Diamonds2, 50, 50, 50, True)
+        Object = robot.world.define_custom_cube(CustomObjectTypes.CustomType05,CustomObjectMarkers.Diamonds3, 50, 50, 50, True)
+        Anfahrpunkt = LagerAnfahrpunkt
+        robot.go_to_pose(MA5_Anfahrpunkt).wait_for_completed()
+     
+        
     offset = 180
     
     print("Cozmo staht am anfahrpunkt")
@@ -97,13 +107,12 @@ def standby(robot: cozmo.robot.Robot):
     global Transportliste
     global Feedback
 
-    MA1_fixed_object = robot.world.create_custom_fixed_object(Pose(0, 300, 0, angle_z=degrees(0)), 50, 100, 60, relative_to_robot=False)
-    MA2_fixed_object = robot.world.create_custom_fixed_object(Pose(0, 700, 0, angle_z=degrees(0)), 50, 100, 60, relative_to_robot=False)
-    MA3_fixed_object = robot.world.create_custom_fixed_object(Pose(400, 1000, 0, angle_z=degrees(0)), 50, 100, 60, relative_to_robot=False)
-    MA4_fixed_object = robot.world.create_custom_fixed_object(Pose(800, 700, 0, angle_z=degrees(0)), 50, 100, 60, relative_to_robot=False)
-    MA5_fixed_object = robot.world.create_custom_fixed_object(Pose(800, 300, 0, angle_z=degrees(0)), 50, 100, 60, relative_to_robot=False)
-
-            
+    #MA1_fixed_object = robot.world.create_custom_fixed_object(Pose(0, 300, 0, angle_z=degrees(0)), 50, 100, 60, relative_to_robot=False)
+    #MA2_fixed_object = robot.world.create_custom_fixed_object(Pose(0, 700, 0, angle_z=degrees(0)), 50, 100, 60, relative_to_robot=False)
+    #MA3_fixed_object = robot.world.create_custom_fixed_object(Pose(400, 1000, 0, angle_z=degrees(0)), 50, 100, 60, relative_to_robot=False)
+    #MA4_fixed_object = robot.world.create_custom_fixed_object(Pose(800, 700, 0, angle_z=degrees(0)), 50, 100, 60, relative_to_robot=False)
+    #MA5_fixed_object = robot.world.create_custom_fixed_object(Pose(800, 300, 0, angle_z=degrees(0)), 50, 100, 60, relative_to_robot=False)
+                
     cube1 = robot.world.get_light_cube(LightCube1Id)  
     cube2 = robot.world.get_light_cube(LightCube2Id)  
     cube3 = robot.world.get_light_cube(LightCube3Id)
@@ -124,12 +133,12 @@ def standby(robot: cozmo.robot.Robot):
             elif Auftrag[0] == 3:
                 cube = cube3
 
+
             cube.set_lights(cozmo.lights.blue_light)
             getCube(robot,cube)
             Transport(robot, Auftrag, cube) 
             robot.set_all_backpack_lights(cozmo.lights.red_light)
-        else:
-            
+        else:            
             time.sleep(0.5)
 
 
@@ -138,4 +147,4 @@ def runCozmo(TransList, Fdback):
     global Feedback
     Transportliste = TransList
     Feedback = Fdback
-    cozmo.run_program(standby, use_viewer=False ,use_3d_viewer=False)
+    cozmo.run_program(standby, use_viewer=False ,use_3d_viewer=True)
